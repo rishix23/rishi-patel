@@ -1,0 +1,51 @@
+/* .aboutContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .aboutSection {
+    width: 45%;
+  }
+  
+  .topTracksSection {
+    width: 45%;
+  }
+  
+  .topTracksBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .topTracksImage {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    margin-bottom: 30px;
+    transition: transform 0.9s ease-in-out;
+  }
+  
+  .topTracksImage:hover {
+    transform: scale(1.1);
+    filter: brightness(50%);
+  }
+  
+  .topTracksName {
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .languagesSection,
+  .hobbiesSection {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .languagesSection li,
+  .hobbiesSection li {
+    margin-bottom: 5px;
+  }
+   */
