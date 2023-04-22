@@ -25,19 +25,21 @@ const About = () => {
 
     // authorises on page load  
     useEffect(() => {
-        if (localStorage.getItem("code") == null)h
-        const code = new URLSearchParams(window.location.search).get("code");
-        if (!code) {
-            localStorage.setItem("code", code)
+        if (localStorage.getItem("code") == null && URLSearchParams(window.location.search).get("code") == null){
             window.location.href = AUTH_URL;
         }
     }, [])
 
     // generates access token if not already stored in local storage or token expires
     useEffect(() => {
-        const code = new URLSearchParams(window.location.search).get("code");
+        var code = new URLSearchParams(window.location.search).get("code");
+        if(!code){
+            code = localStorage.getItem("code")
+        }
         const storedAccessToken = localStorage.getItem("accessToken");
+
         if ((code && (storedAccessToken == null || storedAccessToken === "")) || (code && isTokenExpired())) {
+            localStorage.setItem("code", code)
             const data = {
                 grant_type: "authorization_code",
                 code,
@@ -128,9 +130,9 @@ const About = () => {
                 </div>
                 <h1>Music</h1>
                 <div className={styles.topTracksSection}>
-                    {/* <button onClick={(e) => getTopTracks("short_term",e)}>Short Term</button>
+                    <button onClick={(e) => getTopTracks("short_term",e)}>Short Term</button>
                     <button onClick={(e) => getTopTracks("medium_term",e)}>Medium Term</button>
-                    <button onClick={(e) => getTopTracks("long_term",e)}>Long Term</button> */}
+                    <button onClick={(e) => getTopTracks("long_term",e)}>Long Term</button>
 
                     <h3>Top Tracks</h3>
 
