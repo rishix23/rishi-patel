@@ -23,9 +23,20 @@ const About = () => {
         }
     }
 
+    const isAuthCodeExpired = () => {
+        const hasBeenOneHour = new Date() - new Date(localStorage.getItem("authCodeDate")) >= 3600000;
+        if (hasBeenOneHour) {
+            localStorage.setItem("authCodeDate", "")
+            return true
+        } else {
+            return false
+        }
+    }
+
     // authorises on page load  
     useEffect(() => {
-        if (localStorage.getItem("code") == null && URLSearchParams(window.location.search).get("code") == null){
+        if ((localStorage.getItem("code") == null && URLSearchParams(window.location.search).get("code") == null) || (isAuthCodeExpired())){
+            localStorage.setItem("authCodeDate", new Date())
             window.location.href = AUTH_URL;
         }
     }, [])
@@ -38,7 +49,7 @@ const About = () => {
         }
         const storedAccessToken = localStorage.getItem("accessToken");
 
-        if ((code && (storedAccessToken == null || storedAccessToken === "")) || (code && isTokenExpired())) {
+        if ((code && (storedAccessToken == null || storedAccessToken === "" || storedAccessToken === "undefined")) || (code && isTokenExpired())) {
             localStorage.setItem("code", code)
             const data = {
                 grant_type: "authorization_code",
