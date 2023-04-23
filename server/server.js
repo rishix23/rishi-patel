@@ -12,6 +12,8 @@ app.use(express.json());
 const port = process.env.PORT;
 
 // database init
+//const uri = 'mongodb://rishix23:Absegami16!@mongo:27017/test';
+
 const uri = process.env.URI;
 mongoose.connect(uri);
 const connection = mongoose.connection;

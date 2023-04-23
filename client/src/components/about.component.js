@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import styles from './about.module.css'
+import Cookies from "js-cookie";
+
+
+// ADD COOKIES 
 
 const CLIENT_ID = "e20a8839be614c8c97534cfc86abe7bb";
 const CLIENT_SECRET = "ed391406a7be4f7ab6299040a427a6a8"
@@ -13,20 +17,21 @@ const About = () => {
 
     // check if the token has expired
     const isTokenExpired = () => {
-        const hasBeenOneHour = new Date() - new Date(localStorage.getItem("accessTokenDate")) >= 3600000;
+        const hasBeenOneHour = new Date() - new Date(Cookies.get("accessTokenDate")) >= 3600000;
         if (hasBeenOneHour) {
-            localStorage.setItem("accessToken", "");
-            localStorage.setItem("accessTokenDate", "")
+            Cookies.set("accessToken", "");
+            Cookies.set("accessTokenDate", "")
             return true
         } else {
             return false
         }
     }
 
+    // check if the auth code has expired
     const isAuthCodeExpired = () => {
-        const hasBeenOneHour = new Date() - new Date(localStorage.getItem("authCodeDate")) >= 3600000;
+        const hasBeenOneHour = new Date() - new Date(Cookies.get("authCodeDate")) >= 3600000;
         if (hasBeenOneHour) {
-            localStorage.setItem("authCodeDate", "")
+            Cookies.set("authCodeDate", "")
             return true
         } else {
             return false
@@ -35,8 +40,8 @@ const About = () => {
 
     // authorises on page load  
     useEffect(() => {
-        if ((localStorage.getItem("code") == null && URLSearchParams(window.location.search).get("code") == null) || (isAuthCodeExpired())){
-            localStorage.setItem("authCodeDate", new Date())
+        if ((Cookies.get("code") == null && new URLSearchParams(window.location.search).get("code") == null) || (isAuthCodeExpired())){
+            Cookies.set("authCodeDate", new Date())
             window.location.href = AUTH_URL;
         }
     }, [])
@@ -45,12 +50,12 @@ const About = () => {
     useEffect(() => {
         var code = new URLSearchParams(window.location.search).get("code");
         if(!code){
-            code = localStorage.getItem("code")
+            code = Cookies.get("code")
         }
-        const storedAccessToken = localStorage.getItem("accessToken");
+        const storedAccessToken = Cookies.get("accessToken");
 
         if ((code && (storedAccessToken == null || storedAccessToken === "" || storedAccessToken === "undefined")) || (code && isTokenExpired())) {
-            localStorage.setItem("code", code)
+            Cookies.set("code", code)
             const data = {
                 grant_type: "authorization_code",
                 code,
@@ -67,8 +72,8 @@ const About = () => {
                 .then((response) => response.json())
                 .then((data) => {
                     setAccessToken(data.access_token);
-                    localStorage.setItem("accessToken", data.access_token);
-                    localStorage.setItem("accessTokenDate", new Date())
+                    Cookies.set("accessToken", data.access_token);
+                    Cookies.set("accessTokenDate", new Date())
                 });
         } else if (storedAccessToken) {
             setAccessToken(storedAccessToken)
