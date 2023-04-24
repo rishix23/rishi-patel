@@ -14,7 +14,7 @@ const port = process.env.PORT;
 // database init
 //const uri = 'mongodb://rishix23:Absegami16!@mongo:27017/test';
 
-const uri = process.env.URI;
+const uri = process.env.MONGO_URI;
 mongoose.connect(uri);
 const connection = mongoose.connection;
 connection.once("open", () => {
