@@ -11,10 +11,13 @@ app.use(express.json());
 // setting port
 const port = process.env.PORT;
 
-// database init
-//const uri = 'mongodb://rishix23:Absegami16!@mongo:27017/test';
+// uri for Netifly
+const uri = process.env.URI
 
-const uri = process.env.MONGO_URI;
+// uri for docker
+//const uri = process.env.MONGO_URI;
+
+// database init
 mongoose.connect(uri);
 const connection = mongoose.connection;
 connection.once("open", () => {
@@ -35,5 +38,5 @@ app.get("/code", (req, res) => {
   });
   
 app.listen(5000, () => {
-  console.log(`Server started on port ${port}`);
+  console.log(`Server started on port ${5000}`);
 });
