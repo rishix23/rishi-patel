@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react"
 import axios from 'axios';
 
+let baseURL = 'http://localhost:5000'; // default for development
+
+if (process.env.NODE_ENV === 'production') {
+  baseURL = 'https://jade-liger-eed5fd.netlify.app/api'; // production URL
+}
+
 const Blogs = () => {
   const [blogName, setBlogName] = useState('');
   const [blogs, setBlogs] = useState('')
@@ -15,7 +21,7 @@ const Blogs = () => {
       blogName
     }
     console.log(blog);
-    axios.post('http://localhost:5000/blogs/add', blog)
+    axios.post(`${baseURL}/blogs/add`, blog)
       .then(res => {
         console.log(res.data);
         // Add the new blog to the blogs state array
@@ -27,7 +33,7 @@ const Blogs = () => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:5000/blogs/')
+    axios.get(`${baseURL}/blogs/`)
       .then(response => {
         if (response.data.length > 0) {
           setBlogs(response.data);

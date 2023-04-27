@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import styles from './about.module.css'
 import Cookies from "js-cookie";
 
+let baseURL = 'http://localhost:3000'; // default for development
 
-// ADD COOKIES 
+if (process.env.NODE_ENV === 'production') {
+  baseURL = 'https://jade-liger-eed5fd.netlify.app'; // production URL
+}
 
 const CLIENT_ID = "e20a8839be614c8c97534cfc86abe7bb";
 const CLIENT_SECRET = "ed391406a7be4f7ab6299040a427a6a8"
-const REDIRECT_URI = "http://localhost:3000/about/callback";
+const REDIRECT_URI = `${baseURL}/about/callback`;
 const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=user-top-read`;
 
 const About = () => {
