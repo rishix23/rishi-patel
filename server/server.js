@@ -10,7 +10,7 @@ app.use(express.json());
 
 // setting port
 // const port = process.env.PORT // || 5000;
-const port = process.env.port || 80
+const port = process.env.PORT
 
 // uri for mongo docker
 const uri = process.env.URI
