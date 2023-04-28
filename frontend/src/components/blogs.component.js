@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react"
 import axios from 'axios';
 
-let baseURL = 'http://localhost:5000'; // default for development
+// let baseURL = 'http://localhost:5000'; // default for development
+console.log(`The env is: ${process.env.NODE_ENV}`)
 
-if (process.env.NODE_ENV === 'production') {
-  baseURL = 'https://jade-liger-eed5fd.netlify.app/api'; // production URL
-}
+let baseURL = 'https://jade-liger-eed5fd.netlify.app/api'; // default for development
+
+// if (process.env.NODE_ENV === 'production') {
+//   baseURL = 'https://jade-liger-eed5fd.netlify.app/api'; // production URL
+// }
 
 const Blogs = () => {
   const [blogName, setBlogName] = useState('');

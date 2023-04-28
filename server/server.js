@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // setting port
-const port = process.env.PORT || 5000;
+const port = process.env.PORT // || 5000;
 
 // uri for mongo docker
 const uri = process.env.URI
@@ -25,13 +25,15 @@ connection.once("open", () => {
 const exercisesRouter = require("./routes/exercises");
 const blogsRouter = require("./routes/blogs");
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/api/exercises', exercisesRouter);
-  app.use('/api/blogs', blogsRouter);
-} else {
-  app.use("/exercises", exercisesRouter);
-  app.use("/blogs", blogsRouter);
-}
+app.use('/api/exercises', exercisesRouter);
+app.use('/api/blogs', blogsRouter);
+// if (process.env.NODE_ENV === 'production') {
+//   app.use('/api/exercises', exercisesRouter);
+//   app.use('/api/blogs', blogsRouter);
+// } else {
+//   app.use("/exercises", exercisesRouter);
+//   app.use("/blogs", blogsRouter);
+// }
 
 // app.get("/code", (req, res) => {
 //     //res.redirect("http://localhost:3000/about")

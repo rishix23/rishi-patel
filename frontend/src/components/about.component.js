@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import styles from './about.module.css'
 import Cookies from "js-cookie";
 
-let baseURL = 'http://localhost:3000'; // default for development
+console.log(`The env is: ${process.env.NODE_ENV}`)
 
-if (process.env.NODE_ENV === 'production') {
-  baseURL = 'https://jade-liger-eed5fd.netlify.app'; // production URL
-}
+// let baseURL = 'http://localhost:3000'; // default for development
+let baseURL = 'https://jade-liger-eed5fd.netlify.app'
+// if (process.env.NODE_ENV === 'production') {
+//   baseURL = 'https://jade-liger-eed5fd.netlify.app'; // production URL
+// }
 
 const CLIENT_ID = "e20a8839be614c8c97534cfc86abe7bb";
 const CLIENT_SECRET = "ed391406a7be4f7ab6299040a427a6a8"
