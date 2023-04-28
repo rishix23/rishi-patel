@@ -2,5 +2,8 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "request": "^2.88.2"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }
