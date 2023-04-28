@@ -32,9 +32,9 @@ connection.once("open", () => {
 //   app.use("/blogs", blogsRouter);
 // }
 
-// app.use("/", (req, res) => {
-//     res("Hello World")
-//   });
+app.use("/", (req, res) => {
+    res("Hello World")
+  });
   
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
