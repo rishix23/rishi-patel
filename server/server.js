@@ -14,8 +14,6 @@ const port = process.env.PORT;
 // uri for mongo docker
 const uri = process.env.URI
 
-console.log(`The URI is ${uri}`)
-
 //database init
 mongoose.connect(uri);
 const connection = mongoose.connection;
