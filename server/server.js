@@ -12,7 +12,7 @@ app.use(express.json());
 const port = process.env.PORT;
 
 // uri for mongo docker
-const uri = process.env.URI
+const uri = 'mongodb+srv://rishix23:Absegami16!@cluster1.insdjk8.mongodb.net/?retryWrites=true&w=majority'
 
 //database init
 mongoose.connect(uri);
