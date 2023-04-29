@@ -9,10 +9,10 @@ const Navbar = () => {
         <ul className="navbar-nav mr-auto">
           {/* <li className="navbar-item">
             <Link to="/about" className="nav-link">About</Link>
-          </li>
+              </li> */}
           <li className="navbar-item">
             <Link to="/blogs" className="nav-link">Blog</Link>
-          </li> */}
+          </li> 
           <li className="navbar-item">
             <Link to="/projects" className="nav-link">Projects</Link>
           </li>
