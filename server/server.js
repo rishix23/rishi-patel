@@ -12,8 +12,8 @@ app.use(express.json());
 const port = process.env.PORT;
 
 // uri for mongo docker
-const uri = 'mongodb+srv://rishix23:Absegami16!@cluster1.insdjk8.mongodb.net/?retryWrites=true&w=majority'
-
+const uri = "mongodb+srv://rishix23:Absegami16!@cluster1.insdjk8.mongodb.net/?retryWrites=true&w=majority"
+console.log(`The URI is ${uri}`)
 //database init
 mongoose.connect(uri);
 const connection = mongoose.connection;
