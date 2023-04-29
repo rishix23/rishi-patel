@@ -16,11 +16,11 @@ const port = process.env.PORT
 const uri = 'mongodb+srv://rishix23:Absegami16!@cluster1.insdjk8.mongodb.net/?retryWrites=true&w=majority'
 
 // database init
-mongoose.connect(uri);
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("MongoDB database connection established successfully");
-});
+// mongoose.connect(uri);
+// const connection = mongoose.connection;
+// connection.once("open", () => {
+//   console.log("MongoDB database connection established successfully");
+// });
 
 // routes
 // const blogsRouter = require("./routes/blogs");
