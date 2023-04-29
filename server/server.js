@@ -33,7 +33,7 @@ connection.once("open", () => {
 // }
 
 app.use("/", (req, res) => {
-    res("Hello World")
+    res.send("Hello World")
   });
   
 app.listen(port, () => {
