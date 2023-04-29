@@ -5,15 +5,5 @@
   },
   "engines": {
     "node": ">=14"
-  },
-  "devDependencies": {
-    "concurrently": "^8.0.1"
-  },
-  "scripts": {
-    "start": "node server.js",
-    "build": "react-scripts build",
-    "server": "node server.js",
-    "dev": "concurrently \"npm run build\" \"npm run server\""
   }
-  
 }
