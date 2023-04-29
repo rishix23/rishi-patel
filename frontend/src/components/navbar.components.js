@@ -7,9 +7,9 @@ const Navbar = () => {
       <Link to="/" className="navbar-brand">Rishi</Link>
       <div className="collpase navbar-collapse">
         <ul className="navbar-nav mr-auto">
-          {/* <li className="navbar-item">
+          <li className="navbar-item">
             <Link to="/about" className="nav-link">About</Link>
-              </li> */}
+          </li> 
           <li className="navbar-item">
             <Link to="/blogs" className="nav-link">Blog</Link>
           </li> 
