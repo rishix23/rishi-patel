@@ -9,6 +9,9 @@ else {
   baseURL = 'http://localhost:5000'
 }
 
+console.log(`Environment is: ${process.env.NODE_ENV}`)
+console.log(`Base URL is: ${baseURL}`)
+
 const Blogs = () => {
   const [blogName, setBlogName] = useState('');
   const [blogs, setBlogs] = useState('')
