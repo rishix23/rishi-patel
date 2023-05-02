@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./about.module.css";
 import Cookies from "js-cookie";
+import React from 'react';
 
 let baseURL;
 if (process.env.NODE_ENV === "production") {
@@ -186,7 +187,7 @@ const About = () => {
             <div className={styles.topTracksBox}>
               {topTracks.length > 0 &&
                 topTracks.map((track) => (
-                  <div key={track.id}>
+                  <React.Fragment key={track.id}>
                     <img
                       className={styles.topTracksImage}
                       src={track.album.images[1].url}
@@ -195,7 +196,7 @@ const About = () => {
                     <div className={styles.topTracksName}>
                       {track.album.name} by {track.artists[0].name}
                     </div>
-                  </div>
+                  </React.Fragment>
                 ))}
             </div>
           )}
@@ -203,7 +204,7 @@ const About = () => {
           <p>api integration coming soon...</p>
 
           <h2>Resume</h2>
-          <p>aight how we gonna do this...</p>
+          <p>this will be coming soon in a creative way...</p>
 
         </div>
       </div>
