@@ -1,5 +1,6 @@
-// import "react-datepicker/dist/react-datepicker.css";
 import styles from './projects.module.css';
+import { useEffect } from "react"
+import { getRepos } from "../api/git"
 
 const ProjectList = () => {
   const projects = [
@@ -7,6 +8,19 @@ const ProjectList = () => {
     { name: 'Project B', date: 'February 2022', description: 'This project is about ...' },
     { name: 'Project C', date: 'March 2022', description: 'This project is about ...' },
   ];
+
+  //const [projects, setProjects] = useState()
+
+  useEffect(() => {
+    getRepos().then((repos) => {
+      console.log(repos);
+      console.log("hi");
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }, []);
+  
 
   return (
     <div className={styles.projectsContainer}>

@@ -3,5 +3,5 @@ server/node_modules
 Learning
 data
 server/.env
-frontend/src/.env
+frontend/.env
 todo

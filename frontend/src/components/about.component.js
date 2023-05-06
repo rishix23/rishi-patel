@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === "production") {
   baseURL = "https://rishipatel.netlify.app"; // production URL
 } else {
     baseURL = "http://localhost:3000"
-
 }
 
 const CLIENT_ID = "e20a8839be614c8c97534cfc86abe7bb";
@@ -98,7 +97,7 @@ const About = () => {
     }
   }, [accessToken]);
 
-  // gets top tracks for initial page load (short term)
+  // gets top tracks for initial page load (short term) //////////////////// causing page to reload each time - memos?
   useEffect(() => {
     if (accessToken && topTracks.length === 0) {
       getTopTracks("short_term");
