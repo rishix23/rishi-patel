@@ -1,20 +1,13 @@
 import styles from './projects.module.css';
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getRepos } from "../api/git"
 
 const ProjectList = () => {
-  const projects = [
-    { name: 'Project A', date: 'January 2022', description: 'This project is about ...' },
-    { name: 'Project B', date: 'February 2022', description: 'This project is about ...' },
-    { name: 'Project C', date: 'March 2022', description: 'This project is about ...' },
-  ];
-
-  //const [projects, setProjects] = useState()
+  const [repos, setRepos] = useState([])
 
   useEffect(() => {
     getRepos().then((repos) => {
-      console.log(repos);
-      console.log("hi");
+      setRepos(repos)
     })
     .catch((error) => {
       console.error(error);
@@ -26,11 +19,12 @@ const ProjectList = () => {
     <div className={styles.projectsContainer}>
       <h2>Personal Coding Projects</h2>
       <ul>
-        {projects.map((project, index) => (
+        {repos.map((repo, index) => (
           <li key={index} className={styles.projectItem}>
-            <h3>{project.name}</h3>
-            <p>Date: {project.date}</p>
-            <p>Description: {project.description}</p>
+            <h3>{repo.name}</h3>
+            <p>Date: {repo.created_at}</p>
+            <p>Description: {repo.description}</p>
+            <p>URL: {repo.html_url}</p>
           </li>
         ))}
       </ul>
