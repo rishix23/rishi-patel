@@ -1,18 +1,11 @@
 import { useState, useEffect } from "react";
 import styles from "./about.module.css";
 import Cookies from "js-cookie";
-import React from 'react';
+import React from "react";
 
-let baseURL;
-if (process.env.NODE_ENV === "production") {
-  baseURL = "https://rishipatel.netlify.app"; // production URL
-} else {
-    baseURL = "http://localhost:3000"
-}
-
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-const REDIRECT_URI = `${baseURL}/about/callback`;
+const REDIRECT_URI = process.env.NODE_ENV === "production" ? "https://rishipatel.netlify.app/about/callback" : "http://localhost:3000/about/callback";
 const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=user-top-read`;
 
 const About = () => {
@@ -21,8 +14,7 @@ const About = () => {
 
   // check if the token has expired
   const isTokenExpired = () => {
-    const hasBeenOneHour =
-      new Date() - new Date(Cookies.get("accessTokenDate")) >= 3600000;
+    const hasBeenOneHour = new Date() - new Date(Cookies.get("accessTokenDate")) >= 3600000;
     if (hasBeenOneHour) {
       Cookies.set("accessToken", "");
       Cookies.set("accessTokenDate", "");
@@ -34,8 +26,7 @@ const About = () => {
 
   // check if the auth code has expired
   const isAuthCodeExpired = () => {
-    const hasBeenOneHour =
-      new Date() - new Date(Cookies.get("authCodeDate")) >= 3600000;
+    const hasBeenOneHour = new Date() - new Date(Cookies.get("authCodeDate")) >= 3600000;
     if (hasBeenOneHour) {
       Cookies.set("authCodeDate", "");
       return true;
@@ -46,11 +37,7 @@ const About = () => {
 
   // authorises on page load
   useEffect(() => {
-    if (
-      (Cookies.get("code") == null &&
-        new URLSearchParams(window.location.search).get("code") == null) ||
-      isAuthCodeExpired()
-    ) {
+    if ((Cookies.get("code") == null && new URLSearchParams(window.location.search).get("code") == null) || isAuthCodeExpired()) {
       Cookies.set("authCodeDate", new Date());
       window.location.href = AUTH_URL;
     }
@@ -64,13 +51,7 @@ const About = () => {
     }
     const storedAccessToken = Cookies.get("accessToken");
 
-    if (
-      (code &&
-        (storedAccessToken == null ||
-          storedAccessToken === "" ||
-          storedAccessToken === "undefined")) ||
-      (code && isTokenExpired())
-    ) {
+    if ((code && (storedAccessToken == null || storedAccessToken === "" || storedAccessToken === "undefined")) || (code && isTokenExpired())) {
       Cookies.set("code", code);
       const data = {
         grant_type: "authorization_code",
@@ -96,7 +77,7 @@ const About = () => {
     }
   }, [accessToken]);
 
-  // gets top tracks for initial page load (short term) //////////////////// causing page to reload each time - memos?
+  // gets top tracks for initial page load (short term)
   useEffect(() => {
     if (accessToken && topTracks.length === 0) {
       getTopTracks("short_term");
@@ -113,10 +94,7 @@ const About = () => {
       },
     };
 
-    await fetch(
-      `https://api.spotify.com/v1/me/top/tracks?time_range=${timeFrame}&limit=10`,
-      topTracksParameters
-    )
+    await fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${timeFrame}&limit=10`, topTracksParameters)
       .then((response) => response.json())
       .then((data) => {
         setTopTracks(data.items);
@@ -136,12 +114,9 @@ const About = () => {
         <div className={styles.aboutSection}>
           <h3>About</h3>
           <p>
-            {getAge()} year old DevSecOps Developer. also a software developer
-            with experience in full-stack development. i have worked on lots of
-            projects for work and personal which integrated automation, cloud,
-            scripting, and microservices (like the web page you are on right now
-            ;) i have a passion for tech and always trying to sharpen
-            my skills. have a click around...
+            {getAge()} year old DevSecOps Developer. also a software developer with experience in full-stack development. i have worked on lots of
+            projects for work and personal which integrated automation, cloud, scripting, and microservices (like the web page you are on right now ;)
+            i have a passion for tech and always trying to sharpen my skills. have a click around...
           </p>
 
           <h2>Languages</h2>
@@ -165,39 +140,32 @@ const About = () => {
         </div>
         <h1>Music</h1>
         <div className={styles.topTracksSection}>
-          <button onClick={(e) => getTopTracks("short_term", e)}>
-            Short Term
-          </button>
-          <button onClick={(e) => getTopTracks("medium_term", e)}>
-            Medium Term
-          </button>
-          <button onClick={(e) => getTopTracks("long_term", e)}>
-            Long Term
-          </button>
+          <button onClick={(e) => getTopTracks("short_term", e)}>Short Term</button>
+          <button onClick={(e) => getTopTracks("medium_term", e)}>Medium Term</button>
+          <button onClick={(e) => getTopTracks("long_term", e)}>Long Term</button>
 
           <h3>Top Tracks</h3>
 
-            <div className={styles.topTracksBox}>
-              {topTracks.length > 0 &&
-                topTracks.map((track) => (
-                  <React.Fragment key={track.id}>
-                    <img
-                      className={styles.topTracksImage}
-                      src={track.album.images[1].url}
-                      alt=""
-                    />
-                    <div className={styles.topTracksName}>
-                      {track.album.name} by {track.artists[0].name}
-                    </div>
-                  </React.Fragment>
-                ))}
-            </div>
+          <div className={styles.topTracksBox}>
+            {topTracks.length > 0 &&
+              topTracks.map((track) => (
+                <React.Fragment key={track.id}>
+                  <img
+                    className={styles.topTracksImage}
+                    src={track.album.images[1].url}
+                    alt=""
+                  />
+                  <div className={styles.topTracksName}>
+                    {track.album.name} by {track.artists[0].name}
+                  </div>
+                </React.Fragment>
+              ))}
+          </div>
           <h2> Movies</h2>
           <p>api integration coming soon...</p>
 
           <h2>Resume</h2>
           <p>this will be coming soon in a creative way...</p>
-
         </div>
       </div>
     </>
