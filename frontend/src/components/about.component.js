@@ -10,15 +10,14 @@ if (process.env.NODE_ENV === "production") {
     baseURL = "http://localhost:3000"
 }
 
-const CLIENT_ID = "e20a8839be614c8c97534cfc86abe7bb";
-const CLIENT_SECRET = "ed391406a7be4f7ab6299040a427a6a8";
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
+const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 const REDIRECT_URI = `${baseURL}/about/callback`;
 const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=user-top-read`;
 
 const About = () => {
   const [accessToken, setAccessToken] = useState("");
   const [topTracks, setTopTracks] = useState([]);
-  //const [isLoading, setIsLoading] = useState(true);
 
   // check if the token has expired
   const isTokenExpired = () => {
@@ -106,7 +105,6 @@ const About = () => {
 
   // gets top tracks from medium/long term frames
   async function getTopTracks(timeFrame) {
-    //setIsLoading(true); // Set loading to true before fetching data
     const topTracksParameters = {
       method: "GET",
       headers: {
@@ -122,7 +120,6 @@ const About = () => {
       .then((response) => response.json())
       .then((data) => {
         setTopTracks(data.items);
-        //setIsLoading(false); // Set loading to false after data is fetched
       });
   }
 
@@ -180,9 +177,6 @@ const About = () => {
 
           <h3>Top Tracks</h3>
 
-          {/* {isLoading ? (
-            <p>Loading...</p>
-          ) : ( */}
             <div className={styles.topTracksBox}>
               {topTracks.length > 0 &&
                 topTracks.map((track) => (
@@ -198,7 +192,6 @@ const About = () => {
                   </React.Fragment>
                 ))}
             </div>
-          {/* )} */}
           <h2> Movies</h2>
           <p>api integration coming soon...</p>
 
