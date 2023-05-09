@@ -1,0 +1,42 @@
+.topTracksBox {
+  display: flex;
+  justify-content: center; /* center the items horizontally */
+  padding: 10px;
+  border: 1px solid black;
+  flex-wrap: wrap; /* wrap the items if there isn't enough horizontal space */
+}
+
+.topTrack {
+  display: flex; /* add flex display to the track container */
+  flex-direction: column; /* stack the image and name vertically */
+  align-items: center;
+  margin: 10px;
+  max-width: 250px;
+  height: 300px;
+}
+
+.topTrackImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.9s ease-in-out;
+}
+
+.topTrackImage:hover {
+  transform: scale(1.1);
+  filter: brightness(50%);
+}
+
+.topTrackName {
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 15px; /* add margin between the image and name */
+}
+
+@media (max-width: 768px) {
+  .topTrack {
+    max-width: 100%;
+    margin: 10px 5px;
+  }
+}
