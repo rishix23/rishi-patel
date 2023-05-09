@@ -18,7 +18,7 @@ const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&
 const About = () => {
   const [accessToken, setAccessToken] = useState("");
   const [topTracks, setTopTracks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  //const [isLoading, setIsLoading] = useState(true);
 
   // check if the token has expired
   const isTokenExpired = () => {
@@ -106,7 +106,7 @@ const About = () => {
 
   // gets top tracks from medium/long term frames
   async function getTopTracks(timeFrame) {
-    setIsLoading(true); // Set loading to true before fetching data
+    //setIsLoading(true); // Set loading to true before fetching data
     const topTracksParameters = {
       method: "GET",
       headers: {
@@ -122,7 +122,7 @@ const About = () => {
       .then((response) => response.json())
       .then((data) => {
         setTopTracks(data.items);
-        setIsLoading(false); // Set loading to false after data is fetched
+        //setIsLoading(false); // Set loading to false after data is fetched
       });
   }
 
@@ -180,9 +180,9 @@ const About = () => {
 
           <h3>Top Tracks</h3>
 
-          {isLoading ? (
+          {/* {isLoading ? (
             <p>Loading...</p>
-          ) : (
+          ) : ( */}
             <div className={styles.topTracksBox}>
               {topTracks.length > 0 &&
                 topTracks.map((track) => (
@@ -198,7 +198,7 @@ const About = () => {
                   </React.Fragment>
                 ))}
             </div>
-          )}
+          {/* )} */}
           <h2> Movies</h2>
           <p>api integration coming soon...</p>
 
