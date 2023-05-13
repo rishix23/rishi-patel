@@ -124,20 +124,20 @@ const Spotify = () => {
               </button>
             </div>
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 h-auto">
             {topTracks.length > 0 &&
               topTracks.map((track) => (
                 <div
                   key={track.id}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden w-56 h-72 flex flex-col items-center justify-center">
+                  className="bg-white shadow-lg rounded-lg overflow-hidden w-56 h-auto flex flex-col items-center justify-center">
                   <img
-                    className="object-cover"
                     src={track.album.images[0].url}
                     alt=""
+                    className="h-56 object-contain"
                   />
                   <div className="p-4 text-center">
-                    <h5 className="text-gray-900 font-bold text-base uppercase whitespace-nowrap overflow-hidden overflow-ellipsis max-w-xs">{track.name}</h5>
-                    <p className="text-gray-600 font-medium text-sm">{track.artists[0].name}</p>
+                    <h5 className="text-gray-900 font-bold text-base uppercase overflow-hidden overflow-ellipsis max-w-xs h-12 w-40">{track.name}</h5>
+                    <p className="text-gray-600 font-medium text-sm h-6">{track.artists[0].name}</p>
                   </div>
                 </div>
               ))}
