@@ -1,4 +1,4 @@
-import styles from "./about.module.css";
+//import styles from "./about.module.css";
 import React from "react";
 import Spotify from "../api/spotify";
 
@@ -12,17 +12,16 @@ const About = () => {
 
   return (
     <>
-      <div className={styles.aboutContainer}>
-        <div className={styles.aboutSection}>
+      <div>
+        <div>
           <h3>About</h3>
           <p>
-            {getAge()} year old DevSecOps Developer. also a software developer with experience in full-stack development. i have worked on lots of
-            projects for work and personal which integrated automation, cloud, scripting, and microservices (like the web page you are on right now ;)
-            i have a passion for tech and always trying to sharpen my skills. have a click around...
+            {getAge()} year old DevSecOps Developer. also a software developer with experience in full-stack development. i have worked on lots of projects for work and personal which integrated
+            automation, cloud, scripting, and microservices (like the web page you are on right now ;) i have a passion for tech and always trying to sharpen my skills. have a click around...
           </p>
 
           <h2>Languages</h2>
-          <ul className={styles.languagesSection}>
+          <ul>
             <li>C#</li>
             <li>JavaScript</li>
             <li>ReactJS</li>
@@ -34,7 +33,7 @@ const About = () => {
           </ul>
 
           <h2>Hobbies</h2>
-          <ul className={styles.hobbiesSection}>
+          <ul>
             <li>Gym</li>
             <li>Coding ;)</li>
             <li>Tennis</li>

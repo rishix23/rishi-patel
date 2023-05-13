@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import styles from "./about.module.css";
-import Cookies from "js-cookie";
 import React from "react";
+import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
@@ -103,27 +102,46 @@ const Spotify = () => {
 
   return (
     <>
-      <div className={styles.topTracksSection}>
-        <h4>Top Tracks</h4>
-        <button onClick={(e) => getTopTracks("short_term", e)}>Most Recent</button>
-        <button onClick={(e) => getTopTracks("medium_term", e)}>1 Year</button>
-        <button onClick={(e) => getTopTracks("long_term", e)}>All time</button>
-        <div className={styles.topTracksBox}>
-          {topTracks.length > 0 &&
-            topTracks.map((track) => (
-              <div
-                key={track.id}
-                className={styles.topTrack}>
-                <img
-                  className={styles.topTrackImage}
-                  src={track.album.images[1].url}
-                  alt=""
-                />
-                <div className={styles.topTrackName}>
-                  {track.album.name} by {track.artists[0].name}
+      <div className="bg-gray-100 py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row justify-between items-center mb-6">
+            <h4 className="text-xl font-semibold mb-2 lg:mb-0">Top Tracks</h4>
+            <div className="flex flex-wrap gap-2">
+              <button
+                className="bg-blue-600 hover:bg-blue-600 text-white font-semibold px-4 py-2 mr-2 rounded"
+                onClick={(e) => getTopTracks("short_term", e)}>
+                Most Recent
+              </button>
+              <button
+                className="bg-blue-600 hover:bg-blue-600 text-white font-semibold px-4 py-2 mr-2 rounded"
+                onClick={(e) => getTopTracks("medium_term", e)}>
+                1 Year
+              </button>
+              <button
+                className="bg-blue-600 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded"
+                onClick={(e) => getTopTracks("long_term", e)}>
+                All time
+              </button>
+            </div>
+          </div>
+          <div className="flex gap-6">
+            {topTracks.length > 0 &&
+              topTracks.map((track) => (
+                <div
+                  key={track.id}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden w-56 h-72 flex flex-col items-center justify-center">
+                  <img
+                    className="object-cover"
+                    src={track.album.images[0].url}
+                    alt=""
+                  />
+                  <div className="p-4 text-center">
+                    <h5 className="text-gray-900 font-bold text-base uppercase whitespace-nowrap overflow-hidden overflow-ellipsis max-w-xs">{track.name}</h5>
+                    <p className="text-gray-600 font-medium text-sm">{track.artists[0].name}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
     </>
