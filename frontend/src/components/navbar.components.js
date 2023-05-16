@@ -1,7 +1,14 @@
+import { useState } from "react";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleMobileMenuToggle = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <nav className="bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +25,8 @@ const Navbar = () => {
               type="button"
               className="text-gray-300 hover:text-white focus:outline-none focus:text-white"
               aria-controls="mobile-menu"
-              aria-expanded="false">
+              aria-expanded={isMobileMenuOpen ? "true" : "false"}
+              onClick={handleMobileMenuToggle}>
               <span className="sr-only">Open main menu</span>
               <svg
                 className="h-6 w-6"
@@ -61,7 +69,7 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className="md:hidden"
+        className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}
         id="mobile-menu">
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <Link
@@ -72,22 +80,21 @@ const Navbar = () => {
           <Link
             to="/blogs"
             className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">
-            Blog{" "}
+            Blogs
           </Link>
           <Link
             to="/projects"
             className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">
-            Projects{" "}
+            Projects
           </Link>
           <Link
-            to="/Photos"
+            to="/photos"
             className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300">
-            Photos{" "}
+            Photos
           </Link>
         </div>
       </div>
     </nav>
   );
-};
-
+}
 export default Navbar;
