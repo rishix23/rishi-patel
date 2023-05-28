@@ -12,7 +12,7 @@ const About = () => {
 
   return (
     <>
-      <div>
+      <div className="mx-2">
         <div>
           <h3>About</h3>
           <p>
