@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-custom {
+        @apply bg-gray-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mx-2 font-medium rounded-md transition-colors duration-300;
+    }
+}

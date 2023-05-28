@@ -5,12 +5,6 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {
-      textColor: {
-        "button-blue": "#3182ce", // sets text color to blue
-      },
-    },
-  },
+  variants: {},
   plugins: [],
 };

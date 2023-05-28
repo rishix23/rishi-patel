@@ -108,17 +108,17 @@ const Spotify = () => {
             <h4 className="text-xl font-semibold mb-2 lg:mb-0">Top Tracks</h4>
             <div className="flex flex-wrap gap-2">
               <button
-                className="bg-blue-600 hover:bg-blue-600 text-white font-semibold px-4 py-2 mr-2 rounded"
+                className="btn-custom"
                 onClick={(e) => getTopTracks("short_term", e)}>
                 Most Recent
               </button>
               <button
-                className="bg-blue-600 hover:bg-blue-600 text-white font-semibold px-4 py-2 mr-2 rounded"
+                className="btn-custom"
                 onClick={(e) => getTopTracks("medium_term", e)}>
                 1 Year
               </button>
               <button
-                className="bg-blue-600 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded"
+                className="btn-custom"
                 onClick={(e) => getTopTracks("long_term", e)}>
                 All time
               </button>
