@@ -3,12 +3,7 @@ import React from "react";
 import Spotify from "../api/spotify";
 
 const About = () => {
-  const getAge = () => {
-    let currentYear = new Date();
-    currentYear = currentYear.getFullYear();
-    const birthYear = 1998;
-    return currentYear - birthYear;
-  };
+  const getAge = () => new Date().getFullYear() - 1998;
 
   return (
     <>
@@ -16,7 +11,7 @@ const About = () => {
         <div>
           <h3>About</h3>
           <p>
-            {getAge()} year old DevSecOps Developer. also a software developer with experience in full-stack development. i have worked on lots of projects for work and personal which integrated
+            {getAge()} year old DevSecOps Engineer. also a software developer with experience in full-stack development. i have worked on lots of projects for work and personal which integrated
             automation, cloud, scripting, and microservices (like the web page you are on right now ;) i have a passion for tech and always trying to sharpen my skills. have a click around...
           </p>
 

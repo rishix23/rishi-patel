@@ -107,19 +107,13 @@ const Spotify = () => {
           <div className="flex flex-col lg:flex-row justify-between items-center mb-6">
             <h4 className="text-xl font-semibold mb-2 lg:mb-0">Top Tracks</h4>
             <div className="flex flex-wrap gap-2">
-              <button
-                className="btn-custom"
-                onClick={(e) => getTopTracks("short_term", e)}>
+              <button className="btn-custom" onClick={(e) => getTopTracks("short_term", e)}>
                 Most Recent
               </button>
-              <button
-                className="btn-custom"
-                onClick={(e) => getTopTracks("medium_term", e)}>
+              <button className="btn-custom" onClick={(e) => getTopTracks("medium_term", e)}>
                 1 Year
               </button>
-              <button
-                className="btn-custom"
-                onClick={(e) => getTopTracks("long_term", e)}>
+              <button className="btn-custom" onClick={(e) => getTopTracks("long_term", e)}>
                 All time
               </button>
             </div>
@@ -127,14 +121,8 @@ const Spotify = () => {
           <div className="flex gap-6 h-auto">
             {topTracks.length > 0 &&
               topTracks.map((track) => (
-                <div
-                  key={track.id}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden w-56 h-auto flex flex-col items-center justify-center">
-                  <img
-                    src={track.album.images[0].url}
-                    alt=""
-                    className="h-56 object-contain"
-                  />
+                <div key={track.id} className="bg-white shadow-lg rounded-lg overflow-hidden w-56 h-auto flex flex-col items-center justify-center">
+                  <img src={track.album.images[0].url} alt="" className="h-56 object-contain" />
                   <div className="p-4 text-center">
                     <h5 className="text-gray-900 font-bold text-base uppercase overflow-hidden overflow-ellipsis max-w-xs h-12 w-40">{track.name}</h5>
                     <p className="text-gray-600 font-medium text-sm h-6">{track.artists[0].name}</p>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import editIcon from "../assets/svgs/editIcon.svg";
 
 let baseURL;
 if (process.env.NODE_ENV === "production") {
@@ -44,30 +45,20 @@ const Blogs = () => {
       .catch((error) => console.log(error));
   }, [blogName]);
 
+  const editBlog = () => console.log("Clicked edit icon");
+
   return (
     <>
       <div className="mx-2">
         <h3 className="text-2xl font-semibold">Create New Blog Post</h3>
         <div className="mt-4">
           <div className="flex items-center mb-4">
-            <label
-              htmlFor="blogName"
-              className="mr-2 text-gray-700">
+            <label htmlFor="blogName" className="mr-2 text-gray-700">
               Blog:
             </label>
-            <input
-              type="text"
-              id="blogName"
-              required
-              className="border border-gray-400 px-3 py-2 rounded"
-              value={blogName}
-              onChange={onChangeUsername}
-            />
+            <input type="text" id="blogName" required className="border border-gray-400 px-3 py-2 rounded" value={blogName} onChange={onChangeUsername} />
           </div>
-          <button
-            type="submit"
-            className="btn-custom"
-            onClick={onSubmit}>
+          <button type="submit" className="btn-custom" onClick={onSubmit}>
             Create Blog
           </button>
         </div>
@@ -81,13 +72,7 @@ const Blogs = () => {
                   <div>{blog.blogName}</div>
                   <div className="flex items-center">
                     <div className="bg-gray-800 rounded-md hover:bg-gray-700 p-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 text-white"
-                        viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                      </svg>
+                      <img className="h-4 w-4 text-white" onClick={() => editBlog()} src={editIcon} alt="edit"></img>
                     </div>
                   </div>
                 </div>

@@ -21,9 +21,7 @@ const ProjectList = () => {
       <h2>Personal Coding Projects</h2>
       <ul>
         {repos.map((repo, index) => (
-          <li
-            key={index}
-            className={styles.projectItem}>
+          <li key={index} className={styles.projectItem}>
             <h3>{repo.name}</h3>
             <p>Date: {repo.created_at}</p>
             <p>Description: {repo.description}</p>
