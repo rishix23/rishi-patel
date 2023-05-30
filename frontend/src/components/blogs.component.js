@@ -49,7 +49,7 @@ const Blogs = () => {
 
   return (
     <>
-      <div className="mx-2">
+      <div className="dark:bg-blue-500 mx-2">
         <h3 className="text-2xl font-semibold">Create New Blog Post</h3>
         <div className="mt-4">
           <div className="flex items-center mb-4">
