@@ -49,7 +49,7 @@ const Blogs = () => {
 
   return (
     <>
-      <div className="dark:bg-blue-500 mx-2">
+      <div className="mx-2">
         <h3 className="text-2xl font-semibold">Create New Blog Post</h3>
         <div className="mt-4">
           <div className="flex items-center mb-4">
@@ -71,8 +71,8 @@ const Blogs = () => {
                 <div className="flex items-center justify-between px-4 py-2 border mb-3 bg-white rounded-md hover:bg-gray-100">
                   <div>{blog.blogName}</div>
                   <div className="flex items-center">
-                    <div className="bg-gray-800 rounded-md hover:bg-gray-700 p-1">
-                      <img className="h-4 w-4 text-white" onClick={() => editBlog()} src={editIcon} alt="edit"></img>
+                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1">
+                      <img className="h-4 w-4 dark:text-white text-black" onClick={() => editBlog()} src={editIcon} alt="edit"></img>
                     </div>
                   </div>
                 </div>
