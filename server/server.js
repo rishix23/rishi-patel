@@ -12,7 +12,7 @@ app.use(express.json());
 const port = process.env.PORT;
 
 // uri for mongo docker
-const uri = process.env.URI
+const uri = process.env.URI;
 
 //database init
 mongoose.connect(uri);
@@ -24,12 +24,12 @@ connection.once("open", () => {
 //routes
 const blogsRouter = require("./routes/blogs");
 
-app.use('/blogs', blogsRouter);
+app.use("/blogs", blogsRouter);
 
 app.use("/", (req, res) => {
-    res.send("Hello World")
-  });
-  
+  res.send("Hello World");
+});
+
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
