@@ -9,6 +9,7 @@ const Blogs = () => {
   const [blogName, setBlogName] = useState("");
   const [blogs, setBlogs] = useState([]);
 
+  // gets blog
   useEffect(() => {
     axios
       .get(`${baseURL}/blogs/`)
@@ -24,6 +25,7 @@ const Blogs = () => {
     setBlogName(e.target.value);
   };
 
+  // adds blog
   const onSubmit = (e) => {
     e.preventDefault();
     const blog = {
@@ -38,20 +40,12 @@ const Blogs = () => {
     setBlogName("");
   };
 
-  const editBlog = (blog) => {
-    setCurrentBlog(blog);
-  };
+  // updates blog
+  const updateBlog = (currentBlog) => {
+    axios.put(`${baseURL}/blogs/update/${currentBlog._id}`, currentBlog).then((res) => {
+      console.log(res.data);
+    });
 
-  const handleOnChange = (event) => {
-    const { value } = event.target;
-    setCurrentBlog((prevState) => ({
-      ...prevState,
-      blogName: value,
-    }));
-  };
-
-  const saveEdit = () => {
-    console.log(currentBlog);
     setBlogs((prevBlogs) => {
       const updatedBlogs = prevBlogs.map((blog) => {
         if (blog._id === currentBlog._id) {
@@ -64,6 +58,15 @@ const Blogs = () => {
     });
 
     setCurrentBlog("");
+  };
+
+  // handles input change
+  const handleOnChange = (event) => {
+    const { value } = event.target;
+    setCurrentBlog((prevState) => ({
+      ...prevState,
+      blogName: value,
+    }));
   };
 
   return (
@@ -93,8 +96,8 @@ const Blogs = () => {
                       <div>
                         <input type="text" defaultValue={currentBlog.blogName} onChange={handleOnChange} />
                       </div>
-                      <button className="btn-custom" onClick={saveEdit}>
-                        Save
+                      <button className="btn-custom" onClick={() => updateBlog(currentBlog)}>
+                        Update Blog
                       </button>
                     </>
                   ) : (
@@ -102,7 +105,7 @@ const Blogs = () => {
                   )}
                   <div className="flex items-center">
                     <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1">
-                      <img className="h-4 w-4 dark:text-white text-black" onClick={() => editBlog(blog)} src={editIcon} alt="edit"></img>
+                      <img className="h-4 w-4 dark:text-white text-black" onClick={() => setCurrentBlog(blog)} src={editIcon} alt="edit"></img>
                     </div>
                   </div>
                 </div>
