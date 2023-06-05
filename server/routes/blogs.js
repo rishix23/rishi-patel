@@ -8,7 +8,7 @@ router.route("/").get((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-// add new blog
+// create new blog
 router.route("/add").post((req, res) => {
   const blogName = req.body.blogName;
   const newBlog = new Blog({ blogName });
@@ -29,13 +29,26 @@ router.route("/update/:id").put((req, res) => {
       if (!blog) {
         return res.status(404).json("Blog not found");
       }
-
       blog.blogName = blogName;
 
       blog
         .save()
         .then(() => res.json("Blog updated!"))
         .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
+// delete blog
+router.route("/delete/:id").delete((req, res) => {
+  const { id } = req.params;
+
+  Blog.findByIdAndDelete(id)
+    .then((blog) => {
+      if (!blog) {
+        return res.status(404).json("Blog not found");
+      }
+      res.json("Blog deleted!");
     })
     .catch((err) => res.status(400).json("Error: " + err));
 });

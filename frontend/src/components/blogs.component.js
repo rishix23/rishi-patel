@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import editIcon from "../assets/svgs/editIcon.svg";
+import trashIcon from "../assets/svgs/trashIcon.svg";
 
 const baseURL = process.env.NODE_ENV === "production" ? "https://rishi-patel-server.onrender.com" : "http://localhost:5000";
 
@@ -19,14 +20,14 @@ const Blogs = () => {
         }
       })
       .catch((error) => console.log(error));
-  }, [blogName]);
+  }, [blogName, blogs]);
 
-  const onChangeUsername = (e) => {
+  const onBlogNameChange = (e) => {
     setBlogName(e.target.value);
   };
 
   // adds blog
-  const onSubmit = (e) => {
+  const createBlog = (e) => {
     e.preventDefault();
     const blog = {
       blogName,
@@ -41,15 +42,14 @@ const Blogs = () => {
   };
 
   // updates blog
-  const updateBlog = (currentBlog) => {
-    axios.put(`${baseURL}/blogs/update/${currentBlog._id}`, currentBlog).then((res) => {
-      console.log(res.data);
-    });
+  const updateBlog = (blogToUpdate) => {
+    console.log(blogToUpdate);
+    axios.put(`${baseURL}/blogs/update/${blogToUpdate._id}`, blogToUpdate);
 
     setBlogs((prevBlogs) => {
       const updatedBlogs = prevBlogs.map((blog) => {
-        if (blog._id === currentBlog._id) {
-          return currentBlog;
+        if (blog._id === blogToUpdate._id) {
+          return blogToUpdate;
         }
         return blog;
       });
@@ -58,6 +58,21 @@ const Blogs = () => {
     });
 
     setCurrentBlog("");
+  };
+
+  // deletes blog
+  const deleteBlog = (blogToDelete) => {
+    console.log(blogToDelete);
+    axios
+      .delete(`${baseURL}/blogs/delete/${blogToDelete._id}`)
+      .then((response) => {
+        // Remove the deleted blog from the blogs array
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog._id !== blogToDelete._id));
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // handles input change
@@ -78,9 +93,9 @@ const Blogs = () => {
             <label htmlFor="blogName" className="mr-2 text-gray-700">
               Blog:
             </label>
-            <input type="text" id="blogName" required className="border border-gray-400 px-3 py-2 rounded" value={blogName} onChange={onChangeUsername} />
+            <input type="text" id="blogName" required className="border border-gray-400 px-3 py-2 rounded" value={blogName} onChange={onBlogNameChange} />
           </div>
-          <button type="submit" className="btn-custom" onClick={onSubmit}>
+          <button type="submit" className="btn-custom" onClick={createBlog}>
             Create Blog
           </button>
         </div>
@@ -93,19 +108,27 @@ const Blogs = () => {
                 <div className="flex items-center justify-between px-4 py-2 border mb-3 bg-white rounded-md hover:bg-gray-100">
                   {currentBlog && currentBlog._id === blog._id ? (
                     <>
-                      <div>
-                        <input type="text" defaultValue={currentBlog.blogName} onChange={handleOnChange} />
+                      <div className="flex justify-between">
+                        <div>
+                          <input className="w-full" type="text" defaultValue={currentBlog.blogName} onChange={handleOnChange} />
+                        </div>
+                        <button className="btn-custom" onClick={() => updateBlog(currentBlog)}>
+                          Update Blog
+                        </button>
+                        <button className="btn-custom" onClick={() => setCurrentBlog("")}>
+                          Cancel
+                        </button>
                       </div>
-                      <button className="btn-custom" onClick={() => updateBlog(currentBlog)}>
-                        Update Blog
-                      </button>
                     </>
                   ) : (
                     <div>{blog.blogName}</div>
                   )}
-                  <div className="flex items-center">
-                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1">
+                  <div className="flex items-center justify-between">
+                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1 mr-2">
                       <img className="h-4 w-4 dark:text-white text-black" onClick={() => setCurrentBlog(blog)} src={editIcon} alt="edit"></img>
+                    </div>
+                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1 mr-2">
+                      <img className="h-4 w-4 dark:text-white text-black" onClick={() => deleteBlog(blog)} src={trashIcon} alt="delete" />
                     </div>
                   </div>
                 </div>
