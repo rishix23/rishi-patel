@@ -9,6 +9,16 @@
     .btn-navbar{
         @apply dark:text-white text-black hover:text-white hover:bg-gradient-to-r from-purple-500 to-red-500 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300
     }
+
+    /* For light mode */
+.stroke-black {
+    @apply text-black;
+  }
+  
+  /* For dark mode */
+  .stroke-white {
+    @apply text-blue-300;
+  }
 }
 
   

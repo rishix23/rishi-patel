@@ -107,35 +107,38 @@ const Blogs = () => {
               <React.Fragment key={index}>
                 <div className="flex items-center justify-between px-4 py-2 border mb-3 bg-white rounded-md hover:bg-gray-100">
                   {currentBlog && currentBlog._id === blog._id ? (
-                    <>
-                      <div className="flex justify-between">
-                        <div>
-                          <input className="w-full" type="text" defaultValue={currentBlog.blogName} onChange={handleOnChange} />
-                        </div>
-                        <button className="btn-custom" onClick={() => updateBlog(currentBlog)}>
-                          Update Blog
-                        </button>
-                        <button className="btn-custom" onClick={() => setCurrentBlog("")}>
-                          Cancel
-                        </button>
+                    <div className="flex justify-between">
+                      <div>
+                        <input
+                          className="w-full px-3 py-2 rounded border border-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                          type="text"
+                          defaultValue={currentBlog.blogName}
+                          onChange={handleOnChange}
+                        />
                       </div>
-                    </>
+                      <button className="btn-custom" onClick={() => updateBlog(currentBlog)}>
+                        Update Blog
+                      </button>
+                      <button className="btn-custom" onClick={() => setCurrentBlog("")}>
+                        Cancel
+                      </button>
+                    </div>
                   ) : (
-                    <div>{blog.blogName}</div>
+                    <div className="text-lg font-medium">{blog.blogName}</div>
                   )}
                   <div className="flex items-center justify-between">
-                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1 mr-2">
-                      <img className="h-4 w-4 dark:text-white text-black" onClick={() => setCurrentBlog(blog)} src={editIcon} alt="edit"></img>
+                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-2 mr-2">
+                      <img className="h-6 w-6" onClick={() => setCurrentBlog(blog)} src={editIcon} alt="edit" />
                     </div>
-                    <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-1 mr-2">
-                      <img className="h-4 w-4 dark:text-white text-black" onClick={() => deleteBlog(blog)} src={trashIcon} alt="delete" />
+                    <div className="bg-blue-500 dark:text-blue-400 rounded-md p-2 mr-2">
+                      <img className="h-6 w-6 dark:text-blue-400 stroke-white" onClick={() => deleteBlog(blog)} src={trashIcon} alt="delete" />
                     </div>
                   </div>
                 </div>
               </React.Fragment>
             ))
           ) : (
-            <div>No blogs yet.</div>
+            <div className="text-gray-500">No blogs yet.</div>
           )}
         </div>
       </div>
