@@ -130,8 +130,14 @@ const Blogs = () => {
                     <div className="dark:bg-gray-800 bg-gray-400 dark:hover:bg-gray-700 hover:bg-gray-300 rounded-md p-2 mr-2">
                       <img className="h-6 w-6" onClick={() => setCurrentBlog(blog)} src={editIcon} alt="edit" />
                     </div>
-                    <div className="bg-blue-500 dark:text-blue-400 stroke-green-100 rounded-md p-2 mr-2">
-                      <img className="h-6 w-6 dark:text-blue-400 stroke-green-100" onClick={() => deleteBlog(blog)} src={trashIcon} alt="delete" />
+                    <div className="bg-blue-500 dark:text-blue-400 rounded-md p-2 mr-2">
+                      <img
+                        className="h-6 w-6"
+                        onClick={() => deleteBlog(blog)}
+                        src={trashIcon}
+                        alt="delete"
+                        style={{ stroke: "green" }} // Set the desired stroke color here
+                      />
                     </div>
                   </div>
                 </div>
