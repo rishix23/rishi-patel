@@ -1,0 +1,30 @@
+# Hash Sets/Maps:
+
+- Hash Set: Stores a collection of unique elements with no associated values.
+
+- Hash Map: Stores key-value pairs, allowing you to associate values with unique keys.
+
+## The primary goals of a good hash function include:
+
+1. uniform distribution
+2. minimal collisions
+3. efficiency
+
+## Handling collisions
+
+Additionally, handling collisions (when two keys hash to the same index) is crucial, and various techniques like chaining or open addressing can be employed.
+
+- Open addressing: setting the key hash index to the next available spot by adding 1 to the index
+- Chaining: having a linked list in an index which allows multiple pairs of keys and values to exist at the same index (downside is maintaining memeory and pointers) then when you do a get operation and arrive at the index you need to traverse through the entire linked list
+
+## Rehash
+
+Rehashing is a mechanism used to adapt the size of the underlying data structure to the number of elements in the hash map. It ensures that the hash map remains efficient by maintaining a reasonable load factor (the ratio of the number of elements to the array size) and minimizing the likelihood of collisions
+
+Need to rehash if the size of the hashmap exceeds its capacity.
+
+## Minimize Collisions
+
+- have the size be prime
+- have a good rehash function
+- increasing size

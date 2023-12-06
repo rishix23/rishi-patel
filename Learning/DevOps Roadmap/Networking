@@ -1,0 +1,12 @@
+OSI Model 
+
+Application
+Presentation
+Session
+Transport 
+Network
+Data Link
+Physcial
+
+
+DNS - A local DNS server will only serve devices on your home network, while an external DNS server can serve devices on your network as well as other networks. Typically, an external DNS server is managed by an Internet Service Provider (ISP) or a third-party DNS provider, and it is used to resolve domain names across the internet. In contrast, a local DNS server is usually installed and managed by the network administrator for a local network, and it is used to resolve domain names for devices on that network.

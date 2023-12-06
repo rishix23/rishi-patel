@@ -1,6 +1,5 @@
 node_modules
 server/node_modules
-Learning
 data
 server/.env
 frontend/.env
