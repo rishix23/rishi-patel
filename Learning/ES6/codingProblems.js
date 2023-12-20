@@ -295,8 +295,150 @@
 //   }
 // };
 
+// CONTAINS DUPLICATE
+// arr = [1,2,2,3,4]
+// var containsDuplicate = function(nums) {
+//     hashMap = {}
+//     for(i=0; i < nums.length; i++) {
+//         if(hashMap[nums[i]]) {
+//             return true
+//         }
+//         else
+//         {
+//             hashMap[nums[i]] = true
+//         }
+//     }
+//     return false
+// }
 // containsDuplicate(arr);
 
+// VALID ANAGRAM
+// var isAnagram = function (s, t) {
+//   s = s.split("").sort().join("");
+//   t = t.split("").sort().join("");
+//   if (s === t) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
+// isAnagram("acb", "bdca");
+
+// TWO SUM O(n^2)
+// nums = [3243, 4, 123123, 123123, 4, 300, 90, 5];
+// target = 8;
+// var twoSum = function (nums, target) {
+//   sumArr = [];
+//   for (i = 0; i < nums.length; i++) {
+//     for (j = i + 1; j < nums.length; j++) {
+//       if (nums[i] + nums[j] == target) {
+//         sumArr.push([i], [j]);
+//         return sumArr;
+//       }
+//     }
+//   }
+//   return false;
+// };
+// twoSum(nums, target)
+
+// TWO SUM USING HASHMAP O(n)
+// arr = [12, 4, 8, 5];
+// target = 9;
+// var twoSum = function (arr, target) {
+//   finalArr = [];
+//   hashMap = new Map();
+//   for (i = 0; i < arr.length; i++) {
+//     if (hashMap.get(target - arr[i]) == undefined) {
+//       hashMap.set(arr[i], i);
+//     } else {
+//       finalArr.push(hashMap.get(target - arr[i]), i);
+//       console.log(finalArr);
+//     }
+//   }
+// };
+// twoSum(arr, target);
+
+// GROUP ANAGRAM
+// strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+// var groupAnagrams = function (strs) {
+//   hashMap = new Map();
+//   finalArr = [];
+//   newStrs = strs.map((x) => x.split("").sort().join(""));
+//   for (i = 0; i < newStrs.length; i++) {
+//     if (hashMap.get(newStrs[i]) == undefined) {
+//       hashMap.set(newStrs[i], [strs[i]]);
+//     } else {
+//       hashMap.get(newStrs[i]).push(strs[i]);
+//     }
+//   }
+//   for (let [key, value] of hashMap.entries()) {
+//     finalArr.push(value);
+//   }
+//   console.log(finalArr);
+// };
+// groupAnagrams(strs);
+
+// TOP K FREQUENT ELEMENTS (REWORK TO ACHIEVE BETTER THAN NlogN)
+// nums = [3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1];
+// k = 2;
+// var topKFrequent = function (nums, k) {
+//   hashMap = new Map();
+//   for (i = 0; i < nums.length; i++) {
+//     if (hashMap.get(nums[i]) == undefined) {
+//       hashMap.set(nums[i], 1);
+//     } else {
+//       hashMap.set(nums[i], hashMap.get(nums[i]) + 1);
+//     }
+//   }
+//   sortedArr = Array.from(hashMap).sort((a, b) => b[1] - a[1]);
+//   finalArr = [];
+//   for (i = 0; i < k; i++) {
+//     finalArr.push(sortedArr[i][0]);
+//   }
+//   console.log(finalArr);
+//   return finalArr;
+// };
+// topKFrequent(nums, k);
+
+// arr = [1, 3, -5, 1, -2, 3, -4];
+
+// prefixSumArr = [];
+// currentSum = 0;
+// for (i = 0; i < arr.length; i++) {
+//   currentSum += arr[i];
+//   prefixSumArr.push(currentSum);
+// }
+
+// console.log(prefixSumArr);
+// var calculatePrefixSum = function (l, r) {
+//   prefixRight = prefixSumArr[r];
+//   prefixLeft = l = 0 ? 0 : prefixSumArr[l - 1];
+
+//   return prefixRight - prefixLeft;
+// };
+// console.log(calculatePrefixSum(3, 4));
+nums = [1, 2, 3, 4];
+var productExceptSelf = function (nums) {
+  finalArr = [];
+  let currentProduct = 1;
+
+  for (let i = 0; i < nums.length; i++) {
+    console.log("Currently on element: " + i);
+    finalArr[i] = currentProduct;
+    console.log("setting current element: " + i + " of the final array to: " + finalArr[i]);
+    currentProduct *= nums[i];
+    console.log("calculating the product so far: " + currentProduct);
+  }
+
+  //   currentProduct = 1;
+
+  //   for (let j = nums.length - 1; j >= 0; j--) {
+  //     finalArr[j] *= currentProduct;
+  //     currentProduct *= nums[j];
+  //   }
+  return finalArr;
+};
+productExceptSelf(nums);
 // // Creating a hash set using objects
 // const hashSet = {};
 
@@ -310,13 +452,18 @@
 // // Checking for membership
 // console.log(hashSet); // true
 
-// // Creating a hash set using Maps
-// const hashSetNew = new Map();
+// Creating a hash set using Maps
+// let hashSetNew = new Map();
 
-// // Adding elements to the hash set
-// hashSetNew.set("apple", true);
-// hashSetNew.set("banana", true);
-// hashSetNew.set("orange", true);
+// // // Adding elements to the hash set
+// hashSetNew.set(0, 2);
+// hashSetNew.set(1, 1);
+// hashSetNew.set(2, 5);
+
+// hashSetNew.get("array").push(2);
+
+// console.log(hashSetNew.get("array"));
+
+// console.log(hashSetNew.get("array"));
 
 // console.log(hashSetNew.get("apple"));
-console.log("hi");
