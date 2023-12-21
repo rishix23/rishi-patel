@@ -400,6 +400,7 @@
 // };
 // topKFrequent(nums, k);
 
+// PREFIX SUM CALCULATION
 // arr = [1, 3, -5, 1, -2, 3, -4];
 
 // prefixSumArr = [];
@@ -417,28 +418,61 @@
 //   return prefixRight - prefixLeft;
 // };
 // console.log(calculatePrefixSum(3, 4));
-nums = [1, 2, 3, 4];
-var productExceptSelf = function (nums) {
-  finalArr = [];
-  let currentProduct = 1;
 
-  for (let i = 0; i < nums.length; i++) {
-    console.log("Currently on element: " + i);
-    finalArr[i] = currentProduct;
-    console.log("setting current element: " + i + " of the final array to: " + finalArr[i]);
-    currentProduct *= nums[i];
-    console.log("calculating the product so far: " + currentProduct);
-  }
+// PRODUCT EXCECPT SELF
+// nums = [1, 2, 3, 4];
+// var productExceptSelf = function (nums) {
+//   leftArr = [];
+//   rightArr = [];
+//   finalArr = [];
+//   let currentProduct = 1;
 
-  //   currentProduct = 1;
+//   for (let i = 0; i < nums.length; i++) {
+//     leftArr[i] = currentProduct;
+//     currentProduct *= nums[i];
+//   }
+//   console.log(leftArr);
 
-  //   for (let j = nums.length - 1; j >= 0; j--) {
-  //     finalArr[j] *= currentProduct;
-  //     currentProduct *= nums[j];
-  //   }
-  return finalArr;
-};
-productExceptSelf(nums);
+//   currentProduct = 1;
+
+//   for (let j = nums.length - 1; j >= 0; j--) {
+//     rightArr[j] = currentProduct;
+//     currentProduct *= nums[j];
+//   }
+//   console.log(rightArr);
+
+//   for (i = 0; i < leftArr.length; i++) {
+//     finalArr[i] = leftArr[i] * rightArr[i];
+//   }
+//   return finalArr;
+// };
+// productExceptSelf(nums);
+
+// IS PALINDROME //BETTER EFFCIENCY?
+// var isPalindrome = function (s) {
+//   arr = s
+//     .replace(/[^a-zA-Z0-9]/g, "")
+//     .replaceAll(" ", "")
+//     .toLowerCase()
+//     .split("");
+//   console.log(arr);
+
+//   l = 0;
+//   r = arr.length - 1;
+
+//   while (l < r) {
+//     if (arr[l] == arr[r]) {
+//       l += 1;
+//       r -= 1;
+//     } else {
+//       console.log(arr[l] + " doesnt equal " + arr[r]);
+//       return false;
+//     }
+//   }
+//   return true;
+// };
+
+// console.log(isPalindrome("a"));
 // // Creating a hash set using objects
 // const hashSet = {};
 
