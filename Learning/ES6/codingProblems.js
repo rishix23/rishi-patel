@@ -473,7 +473,7 @@
 // };
 // console.log(isPalindrome("a"));
 
-// LONGEST CONSECUTIVE o(n)
+// LONGEST CONSECUTIVE O(n)
 // nums = [50, 5, 23, 6743, 234, 6345, -1, 4, 3, -2, 434, -4, 2, 1, 9, 800, -5];
 
 // var longestConsecutive = function (nums) {
@@ -499,6 +499,7 @@
 //   return max;
 // };
 
+// LONGEST CONSECUTIVE O(n log n)
 // var longestConsecutive = function (nums) {
 //   set = new Set(nums);
 //   nums = Array.from(set);
@@ -523,7 +524,30 @@
 //   return maxSize;
 // };
 
-longestConsecutive(nums);
+// longestConsecutive(nums);
+
+// 167. Two Sum II - Input Array Is Sorted
+nums = [2, 3, 4];
+var twoSum = function (numbers, target) {
+  l = 0;
+  r = numbers.length - 1;
+  finalArr = [];
+
+  while (l < r) {
+    if (numbers[l] + numbers[r] == target) {
+      finalArr.push(l + 1);
+      finalArr.push(r + 1);
+    }
+    if (numbers[l] + numbers[r] > target) {
+      r--;
+    } else {
+      l++;
+    }
+  }
+  return finalArr;
+};
+
+twoSum(nums, 6);
 
 // // Creating a hash set using objects
 // const hashSet = {};
