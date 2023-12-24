@@ -471,8 +471,60 @@
 //   }
 //   return true;
 // };
-
 // console.log(isPalindrome("a"));
+
+// LONGEST CONSECUTIVE o(n)
+// nums = [50, 5, 23, 6743, 234, 6345, -1, 4, 3, -2, 434, -4, 2, 1, 9, 800, -5];
+
+// var longestConsecutive = function (nums) {
+//   if (nums == null || nums.length === 0) return 0;
+
+//   nums = new Set(nums);
+//   console.log(nums);
+//   max = 0;
+
+//   for (num of nums) {
+//     if (nums.has(num - 1)) continue; // make sure starting from the beginning of sequence
+
+//     currentNumber = num;
+//     currentMax = 1;
+
+//     while (nums.has(currentNumber + 1)) {
+//       currentNumber++;
+//       currentMax++;
+//     }
+//     max = Math.max(max, currentMax);
+//   }
+
+//   return max;
+// };
+
+// var longestConsecutive = function (nums) {
+//   set = new Set(nums);
+//   nums = Array.from(set);
+//   nums = nums.sort((a, b) => a - b);
+
+//   consecutiveArr = [];
+//   maxSize = 0;
+//   for (i = 0; i < nums.length; i++) {
+//     if (nums[i] - 1 == nums[i - 1] || i == 0) {
+//       consecutiveArr.push(nums[i]);
+//       if (i == nums.length - 1 && consecutiveArr.length > maxSize) {
+//         maxSize = consecutiveArr.length;
+//       }
+//     } else {
+//       if (consecutiveArr.length > maxSize) {
+//         maxSize = consecutiveArr.length;
+//       }
+//       consecutiveArr = [];
+//       consecutiveArr.push(nums[i]);
+//     }
+//   }
+//   return maxSize;
+// };
+
+longestConsecutive(nums);
+
 // // Creating a hash set using objects
 // const hashSet = {};
 
