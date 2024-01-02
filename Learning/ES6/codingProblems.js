@@ -621,36 +621,60 @@
 // 	}
 // 	return result
 
-height = [1, 8, 6, 2, 5, 4, 8, 3, 7];
-var maxArea = function (height) {
-  //need to check if the arr has a legnth greater than else return 0 - done
-  // need to set pointers to left and right - done
-  // increment and decrement pointers based on which pointer is lower - done
-  // get the minimum between the two then calculate the distance between the left and right pointers - done
-  // set a max area variable for each 2 sets of points - done
-  // update max area var whenever a new max area is calculated - done
+// CONATIANER WITH MOST WATER - TIME: o(n) SPACE: o(1)
+// height = [1, 8, 6, 2, 5, 4, 8, 3, 7];
+// var maxArea = function (height) {
+//   // need to check if the array has a length greater than else return 0 - done
+//   // need to set pointers to left and right - done
+//   // increment and decrement pointers based on which pointer is lower - done
+//   // get the minimum between the two pointers then calculate the distance between the left and right pointers - done
+//   // set a max area variable for each 2 sets of points - done
+//   // update max area var whenever a new max area is calculated - done
 
-  if (height.length < 2) {
-    return 0;
+//   if (height.length < 2) {
+//     return 0;
+//   }
+
+//   L = 0;
+//   R = height.length - 1;
+//   maximumArea = 0;
+
+//   while (L < R) {
+//     minHeight = Math.min(height[L], height[R]);
+//     distanceBetween = R - L;
+//     currentMaxArea = minHeight * distanceBetween;
+//     maximumArea = Math.max(maximumArea, currentMaxArea);
+//     if (height[L] < height[R]) {
+//       L++;
+//     } else {
+//       R--;
+//     }
+//   }
+//   return maximumArea;
+// };
+
+// console.log(maxArea(height));
+s = "{()]";
+var isValid = function (s) {
+  s = s.split("");
+  let stack = [];
+
+  if (s[s.length - 1] === "(" || s[s.length - 1] === "[" || s[s.length - 1] === "{") {
+    return false;
   }
 
-  L = 0;
-  R = height.length - 1;
-  maxArea = 0;
+  for (i = 0; i < s.length; i++) {
+    if (s[i] === "(" || s[i] === "[" || s[i] === "{") {
+      stack.push(s[i]);
+    }
 
-  while (L < R) {
-    minHeight = Math.min(height[L], height[R]);
-    distanceBetween = R - L;
-    currentMaxArea = minHeight * distanceBetween;
-    maxArea = Math.max(maxArea, currentMaxArea);
-    if (height[L] < height[R]) {
-      L++;
-    } else {
-      R--;
+    if (s[i] === ")" || s[i] === "]" || s[i] === "}") {
+      stack = stack.pop();
     }
   }
-  return maxArea;
-  //   console.log(maxArea);
+  if (stack.length == 0) {
+    return true;
+  }
 };
 
-console.log(maxArea(height));
+isValid(s);
