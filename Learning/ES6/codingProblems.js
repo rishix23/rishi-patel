@@ -654,25 +654,33 @@
 // };
 
 // console.log(maxArea(height));
-s = "{()]";
+
+// VALID PARENTHESES - TIME: o(n) SPACE: o(1)
+s = "(]})";
 var isValid = function (s) {
   s = s.split("");
   let stack = [];
 
-  if (s[s.length - 1] === "(" || s[s.length - 1] === "[" || s[s.length - 1] === "{") {
+  console.log(s);
+
+  if (s[s.length - 1] == "(" || s[s.length - 1] == "[" || s[s.length - 1] == "{") {
     return false;
   }
 
   for (i = 0; i < s.length; i++) {
-    if (s[i] === "(" || s[i] === "[" || s[i] === "{") {
+    console.log("Current item in s: " + s[i]);
+    lastElement = stack.length - 1;
+    if (s[i] == "(" || s[i] == "[" || s[i] == "{") {
       stack.push(s[i]);
-    }
-
-    if (s[i] === ")" || s[i] === "]" || s[i] === "}") {
-      stack = stack.pop();
+    } else if ((s[i] == ")" && stack[lastElement] == "(") || (s[i] == "]" && stack[lastElement] == "[") || (s[i] == "}" && stack[lastElement] == "{")) {
+      stack.pop();
+    } else {
+      return false;
     }
   }
-  if (stack.length == 0) {
+  if (stack.length > 0) {
+    return false;
+  } else {
     return true;
   }
 };
