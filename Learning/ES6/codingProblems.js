@@ -656,33 +656,51 @@
 // console.log(maxArea(height));
 
 // VALID PARENTHESES - TIME: o(n) SPACE: o(1)
-s = "(]})";
+s = "([}}])";
 var isValid = function (s) {
   s = s.split("");
-  let stack = [];
+  stack = [];
 
-  console.log(s);
+  hashMap = new Map();
 
-  if (s[s.length - 1] == "(" || s[s.length - 1] == "[" || s[s.length - 1] == "{") {
+  hashMap.set(")", "(");
+  hashMap.set("]", "[");
+  hashMap.set("}", "{");
+
+  if (s.length % 2 != 0) {
     return false;
   }
 
   for (i = 0; i < s.length; i++) {
-    console.log("Current item in s: " + s[i]);
-    lastElement = stack.length - 1;
-    if (s[i] == "(" || s[i] == "[" || s[i] == "{") {
+    if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
       stack.push(s[i]);
-    } else if ((s[i] == ")" && stack[lastElement] == "(") || (s[i] == "]" && stack[lastElement] == "[") || (s[i] == "}" && stack[lastElement] == "{")) {
+    } else if (hashMap.get(s[i]) == stack[stack.length - 1]) {
       stack.pop();
     } else {
       return false;
     }
   }
-  if (stack.length > 0) {
-    return false;
-  } else {
-    return true;
-  }
+  return stack.length === 0;
 };
 
 isValid(s);
+
+// DAILY TEMPERATURES - NEEDS REVIEW
+// temperatures = [73, 74, 75, 71, 69, 72, 76, 73];
+
+// var dailyTemperatures = function (temperatures) {
+//   result = Array(temperatures.length).fill(0);
+//   stack = [];
+//   for (i = temperatures.length - 1; i >= 0; i--) {
+//     while (stack.length && temperatures[i] >= temperatures[stack[stack.length - 1]]) {
+//       stack.pop();
+//     }
+
+//     result[i] = stack[stack.length - 1] - i || 0;
+//     stack.push(i);
+//   }
+
+//   return result;
+// };
+
+// dailyTemperatures(temperatures);
