@@ -656,34 +656,34 @@
 // console.log(maxArea(height));
 
 // VALID PARENTHESES - TIME: o(n) SPACE: o(1)
-s = "([}}])";
-var isValid = function (s) {
-  s = s.split("");
-  stack = [];
+// s = "([}}])";
+// var isValid = function (s) {
+//   s = s.split("");
+//   stack = [];
 
-  hashMap = new Map();
+//   hashMap = new Map();
 
-  hashMap.set(")", "(");
-  hashMap.set("]", "[");
-  hashMap.set("}", "{");
+//   hashMap.set(")", "(");
+//   hashMap.set("]", "[");
+//   hashMap.set("}", "{");
 
-  if (s.length % 2 != 0) {
-    return false;
-  }
+//   if (s.length % 2 != 0) {
+//     return false;
+//   }
 
-  for (i = 0; i < s.length; i++) {
-    if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
-      stack.push(s[i]);
-    } else if (hashMap.get(s[i]) == stack[stack.length - 1]) {
-      stack.pop();
-    } else {
-      return false;
-    }
-  }
-  return stack.length === 0;
-};
+//   for (i = 0; i < s.length; i++) {
+//     if (s[i] == "(" || s[i] == "{" || s[i] == "[") {
+//       stack.push(s[i]);
+//     } else if (hashMap.get(s[i]) == stack[stack.length - 1]) {
+//       stack.pop();
+//     } else {
+//       return false;
+//     }
+//   }
+//   return stack.length === 0;
+// };
 
-isValid(s);
+// isValid(s);
 
 // DAILY TEMPERATURES - NEEDS REVIEW
 // temperatures = [73, 74, 75, 71, 69, 72, 76, 73];
@@ -704,3 +704,46 @@ isValid(s);
 // };
 
 // dailyTemperatures(temperatures);
+
+// REVERSE POLISH NOTATION - TIME: o(n) SPACE: o(n) - MORE CONCISE?
+// tokens = ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"];
+// var evalRPN = function (tokens) {
+//   stack = [];
+
+//   for (i = 0; i < tokens.length; i++) {
+//     if (tokens[i] === "+") {
+//       secondElement = stack.pop();
+//       firstElement = stack.pop();
+//       value = +firstElement + +secondElement;
+//       stack.push(value);
+//       continue;
+//     }
+//     if (tokens[i] === "*") {
+//       secondElement = stack.pop();
+//       firstElement = stack.pop();
+//       value = +firstElement * +secondElement;
+//       stack.push(value);
+//       continue;
+//     }
+//     if (tokens[i] === "/") {
+//       secondElement = stack.pop();
+//       firstElement = stack.pop();
+//       value = +firstElement / +secondElement;
+//       value = Math.trunc(value);
+//       stack.push(value);
+//       continue;
+//     }
+//     if (tokens[i] === "-") {
+//       secondElement = stack.pop();
+//       firstElement = stack.pop();
+//       value = +firstElement - +secondElement;
+//       stack.push(value);
+//       continue;
+//     }
+//     stack.push(tokens[i]);
+//   }
+
+//   return stack[stack.length - 1];
+// };
+
+// console.log(evalRPN(tokens));
