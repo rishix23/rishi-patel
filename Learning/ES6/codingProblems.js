@@ -747,3 +747,34 @@
 // };
 
 // console.log(evalRPN(tokens));
+
+// BASEBALLGAME - TIME: o(n) SPACE: o(n) - DOUBLE CHECK THIS
+// operations = ["5", "-2", "4", "C", "D", "9", "+", "+"];
+// var calPoints = function (operations) {
+//   stack = [];
+//   sum = 0;
+
+//   for (i = 0; i < operations.length; i++) {
+//     if (operations[i] === "+") {
+//       stack.push(+stack[stack.length - 2] + +stack[stack.length - 1]);
+//       continue;
+//     }
+//     if (operations[i] === "D") {
+//       stack.push(stack[stack.length - 1] * 2);
+//       continue;
+//     }
+//     if (operations[i] === "C") {
+//       stack.pop();
+//       continue;
+//     }
+//     stack.push(operations[i]);
+//   }
+//   console.log(stack);
+//   for (i = 0; i < stack.length; i++) {
+//     sum += +stack[i];
+//   }
+
+//   return sum;
+// };
+
+// calPoints(operations);
