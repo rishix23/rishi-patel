@@ -778,3 +778,69 @@
 // };
 
 // calPoints(operations);
+
+// IS VALID SODUKU - NEEDS TO FINISH
+
+// board = [
+//   [".", ".", ".", ".", "5", ".", ".", "1", "."],
+//   [".", "4", ".", "3", ".", ".", ".", ".", "."],
+//   [".", ".", ".", ".", ".", "3", ".", ".", "1"],
+//   ["8", ".", ".", ".", ".", ".", ".", "2", "."],
+//   [".", ".", "2", ".", "7", ".", ".", ".", "."],
+//   [".", "1", "5", ".", ".", ".", ".", ".", "."],
+//   [".", ".", ".", ".", ".", "2", ".", ".", "."],
+//   [".", "2", ".", "9", ".", ".", ".", ".", "."],
+//   [".", ".", "4", ".", ".", ".", ".", ".", "."],
+// ];
+// var isValidSudoku = function (board) {
+//   // row
+//   for (i = 0; i < board.length; i++) {
+//     map = new Map();
+//     for (j = 0; j < board[i].length; j++) {
+//       if (board[i][j] != "." && map.get(board[i][j]) === undefined) {
+//         map.set(board[i][j], 1);
+//       } else {
+//         if (board[i][j] != "." && map.get(board[i][j]) == 1) {
+//           console.log("Duplicate found in row: " + board[i][j]);
+//         }
+//       }
+//     }
+//   }
+
+//   // column
+//   for (j = 0; j < board[0].length; j++) {
+//     map = new Map();
+//     for (i = 0; i < board.length; i++) {
+//       if (board[i][j] != "." && map.get(board[i][j]) === undefined) {
+//         map.set(board[i][j], 1);
+//       } else {
+//         if (board[i][j] != "." && map.get(board[i][j]) == 1) {
+//           console.log("Duplicate found in column: " + board[i][j]);
+//         }
+//       }
+//     }
+//   }
+
+//   // 3x3 matrix
+
+// };
+
+// isValidSudoku(board);
+
+// BINARY SEARCH -
+var search = function (nums, target) {
+  (L = 0), (R = nums.length - 1), (M = (L + R) / 2);
+
+  while (L <= R) {
+    M = Math.floor((L + R) / 2);
+
+    if (target > nums[M]) {
+      L = M + 1;
+    } else if (target < nums[M]) {
+      R = M - 1;
+    } else {
+      return M;
+    }
+  }
+  return -1;
+};
