@@ -697,14 +697,16 @@
 //     }
 
 //     result[i] = stack[stack.length - 1] - i || 0;
+//     console.log(result);
+
 //     stack.push(i);
 //   }
-
-//   return result;
 // };
 
 // dailyTemperatures(temperatures);
 
+// stack = [1, 2, 6];
+// result = [1, 1, 4, 2, 1, 1, 0, 0];
 // REVERSE POLISH NOTATION - TIME: o(n) SPACE: o(n) - MORE CONCISE?
 // tokens = ["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"];
 // var evalRPN = function (tokens) {
@@ -827,20 +829,109 @@
 
 // isValidSudoku(board);
 
-// BINARY SEARCH -
-var search = function (nums, target) {
-  (L = 0), (R = nums.length - 1), (M = (L + R) / 2);
+// BINARY SEARCH - DONE
+// var search = function (nums, target) {
+//   (L = 0), (R = nums.length - 1), (M = (L + R) / 2);
 
-  while (L <= R) {
-    M = Math.floor((L + R) / 2);
+//   while (L <= R) {
+//     M = Math.floor((L + R) / 2);
 
-    if (target > nums[M]) {
-      L = M + 1;
-    } else if (target < nums[M]) {
-      R = M - 1;
-    } else {
-      return M;
-    }
-  }
-  return -1;
-};
+//     if (target > nums[M]) {
+//       L = M + 1;
+//     } else if (target < nums[M]) {
+//       R = M - 1;
+//     } else {
+//       return M;
+//     }
+//   }
+//   return -1;
+// };
+
+// SEARCH 2D Matrix - UNDERSTOOD, BUT NEED TO RETRY
+// (matrix = [
+//   [1, 3, 5, 7],
+//   [10, 11, 16, 20],
+//   [23, 30, 34, 60],
+// ]),
+//   (target = 3);
+// var searchMatrix = function (matrix, target) {
+//   T = 0;
+//   B = matrix.length - 1;
+
+//   while (T <= B) {
+//     M = Math.floor((T + B) / 2);
+//     if (target < matrix[M][0]) {
+//       B = M - 1;
+//     } else if (target > matrix[M][matrix[M].length - 1]) {
+//       T = M + 1;
+//     } else {
+//       break;
+//     }
+//   }
+//   if (!(T <= B)) {
+//     return false;
+//   } else {
+//     L = 0;
+//     R = matrix[0].length - 1;
+//     while (L <= R) {
+//       rowM = Math.floor((L + R) / 2);
+//       if (target < matrix[M][rowM]) {
+//         R = rowM - 1;
+//       } else if (target > matrix[M][rowM]) {
+//         L = rowM + 1;
+//       } else {
+//         return true;
+//       }
+//     }
+//   }
+//   return false
+// };
+
+// searchMatrix(matrix, target);
+
+// GUESS NUMBER BINARY SEARCH - Time: - Space:
+// var guessNumber = function (n) {
+//   L = 1;
+//   R = n;
+
+//   while (L <= R) {
+//     M = (L + R) / 2;
+//     if (guess(M) == -1) {
+//       R = M - 1;
+//     } else if (guess(M) == 1) {
+//       L = M + 1;
+//     } else {
+//       return M;
+//     }
+//   }
+// };
+
+// FIND MINIMUM NUMBER IN ROTATED ARRAY - logn - DOUBLE CHECK
+// nums = [3, 4, 5, 1, 2];
+// // nums = [1,2,3,4,5]
+
+// var findMin = function (nums) {
+//   L = 0;
+//   R = nums.length - 1;
+
+//   while (L < R) {
+//     M = Math.floor((L + R) / 2);
+
+//     if (nums[M] > nums[R]) {
+//       L = M + 1;
+//     } else {
+//       R = M;
+//     }
+//   }
+
+//   return nums[L];
+// };
+
+// target = 7;
+// nums = [3, 4, 5, 6, 7, 1, 2];
+// var search = function (nums, target) {
+
+//   L = 0
+//   R = nums.length - 1
+
+// };
