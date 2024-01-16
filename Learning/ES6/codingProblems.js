@@ -927,11 +927,30 @@
 //   return nums[L];
 // };
 
-// target = 7;
+// target = 7       M
 // nums = [3, 4, 5, 6, 7, 1, 2];
 // var search = function (nums, target) {
+//   L = 0;
+//   R = nums.length - 1;
 
-//   L = 0
-//   R = nums.length - 1
+//   M = Math.floor((L + R) / 2);
+//   if (nums[M] > nums[R] && target < nums[R]) {
+//     L = M;
+//   } else R = M;
 
+//   while (L <= R) {
+//     if (target < nums[M]) {
+//       R = M - 1;
+//     } else if (target > nums[M]) {
+//       L = M + 1;
+//     } else {
+//       value = nums[M];
+//     }
+
+//     if (value != undefined) {
+//       return M;
+//     } else {
+//       return -1;
+//     }
+//   }
 // };
