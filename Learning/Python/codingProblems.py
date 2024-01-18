@@ -91,3 +91,46 @@
 # target = 7
 # nums = [2,3,1,2,4,3]
 # minSubArrayLen(target, nums)
+
+prices = [7, 1, 5, 3, 6, 4]
+
+
+def maxProfit(prices):
+    L = 0
+    R = 1
+    maxProfit = 0
+
+    while R < len(prices):
+        if prices[L] < prices[R]:
+            currentProfit = prices[R] - prices[L]
+            maxProfit = (maxProfit, currentProfit)
+        else:
+            L = R
+        R += 1
+    return maxProfit
+
+
+maxProfit(prices)
+
+
+def lengthOfLongestSubstring(s):
+    s = list(s)
+
+    hashMap = {}
+    maxLength = 0
+    L = 0
+
+    for R in range(len(s)):
+        if s[R] not in hashMap:
+            hashMap[s[R]] = R
+            maxLength = max(maxLength, (R - L) + 1)
+        else:  # duplicate found (check if the duplicate letter is in front of L - update L to this new spot)
+            if hashMap[s[R]] >= L:
+                L = hashMap[s[R]] + 1
+            else:  # the duplicate found is behind L, so just get the max length
+                maxLength = max(maxLength, (R - L) + 1)
+            hashMap[s[R]] = R
+    return maxLength
+
+
+lengthOfLongestSubstring(s)
