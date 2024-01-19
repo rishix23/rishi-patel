@@ -45,7 +45,7 @@
 
 
 # CONTAINS NEARBY DUPLICATE SLIDING WINDOW - Time o(n) - Space o(n)
-# def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+# def containsNearbyDuplicate(nums, k):
 #     k = k + 1
 #     L = 0
 
@@ -59,8 +59,6 @@
 #             return True
 #         else:
 #             window.add(nums[R])
-
-
 # # 19:45
 # # 19:55
 # nums = [1, 2, 1, 1]
@@ -68,7 +66,7 @@
 # containsNearbyDuplicate(nums, k)
 
 
-# MINIMUM SUB ARRAY - Time - o(n) - Space -
+# MINIMUM SUB ARRAY - Time: o(n) Space: COMPLETE SPACE ANALYSIS
 # def minSubArrayLen(self, target: int, nums: List[int]) -> int:
 #     L = 0
 #     length = float(inf)
@@ -92,45 +90,96 @@
 # nums = [2,3,1,2,4,3]
 # minSubArrayLen(target, nums)
 
-prices = [7, 1, 5, 3, 6, 4]
+# prices = [7, 1, 5, 3, 6, 4]
+
+## BEST TIME TO BUY AND SELL STOCK - Time: o(n) Space: o(1)
+# def maxProfit(prices):
+#     L = 0
+#     R = 1
+#     maxProfit = 0
+
+#     while R < len(prices):
+#         if prices[L] < prices[R]:
+#             currentProfit = prices[R] - prices[L]
+#             maxProfit = (maxProfit, currentProfit)
+#         else:
+#             L = R
+#         R += 1
+#     return maxProfit
 
 
-def maxProfit(prices):
-    L = 0
-    R = 1
-    maxProfit = 0
+# maxProfit(prices)
 
-    while R < len(prices):
-        if prices[L] < prices[R]:
-            currentProfit = prices[R] - prices[L]
-            maxProfit = (maxProfit, currentProfit)
-        else:
-            L = R
-        R += 1
-    return maxProfit
+## LENGTH OF LONGEST SUBSTRING (Sliding Window) - Time: o(n) Space: o(min(n, m))
+# def lengthOfLongestSubstring(s):
+#     s = list(s)
 
+#     hashMap = {}
+#     maxLength = 0
+#     L = 0
 
-maxProfit(prices)
-
-
-def lengthOfLongestSubstring(s):
-    s = list(s)
-
-    hashMap = {}
-    maxLength = 0
-    L = 0
-
-    for R in range(len(s)):
-        if s[R] not in hashMap:
-            hashMap[s[R]] = R
-            maxLength = max(maxLength, (R - L) + 1)
-        else:  # duplicate found (check if the duplicate letter is in front of L - update L to this new spot)
-            if hashMap[s[R]] >= L:
-                L = hashMap[s[R]] + 1
-            else:  # the duplicate found is behind L, so just get the max length
-                maxLength = max(maxLength, (R - L) + 1)
-            hashMap[s[R]] = R
-    return maxLength
+#     for R in range(len(s)):
+#         if s[R] not in hashMap:
+#             hashMap[s[R]] = R
+#             maxLength = max(maxLength, (R - L) + 1)
+#         else:  # duplicate found (check if the duplicate letter is in front of L - update L to this new spot)
+#             if hashMap[s[R]] >= L:
+#                 L = hashMap[s[R]] + 1
+#             else:  # the duplicate found is behind L, so just get the max length
+#                 maxLength = max(maxLength, (R - L) + 1)
+#             hashMap[s[R]] = R
+#     return maxLength
 
 
-lengthOfLongestSubstring(s)
+# lengthOfLongestSubstring(s)
+
+## CHECK INCLUSION - NEEDS COMPLETING
+# s1 = "ccc"
+# s2 = "cbac"
+
+# def checkInclusion(s1, s2):
+#     s1 = list(s1)
+#     target_length = len(s1)
+#     hashMap = {}
+
+#     L = 0
+#     for R in range(len(s2)):
+#         if s2[R] in s1:
+#             if s2[R] not in hashMap:
+#                 hashMap[s2[R]] = R
+#                 if (R - L) + 1 == target_length:
+#                     print("true")
+#             else:
+#                 if L <= hashMap[s2[R]]:
+#                     L = hashMap[s2[R]] + 1
+#                     hashMap[s2[R]] = R
+#         else:
+#             L = R + 1
+
+#     print(hashMap)
+
+
+# checkInclusion(s1, s2)
+
+
+# NUMBER OF SUBARRAYS (Sliding Window) - Time: o(n)  Space: o(1)
+# def numOfSubarrays(arr, k, threshold):
+#     count = 0
+#     totalSubArrays = 0
+
+#     L = 0
+
+#     for R in range(len(arr)):
+#         if R - L + 1 < k:
+#             count += arr[R]
+#         elif R - L + 1 == k:
+#             count += arr[R]
+#             if count / k >= threshold:
+#                 totalSubArrays += 1
+#             count -= arr[L]
+#             L += 1
+
+#     return totalSubArrays
+# arr = [2,2,2,2,5,5,5,8]
+# k = 3
+# threshold = 4
