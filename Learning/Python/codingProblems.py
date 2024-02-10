@@ -61,7 +61,7 @@
 #             window.add(nums[R])
 # # 19:45
 # # 19:55
-# nums = [1, 2, 1, 1]
+# nums = [1, 2, 4, 2]
 # k = 2
 # containsNearbyDuplicate(nums, k)
 
@@ -183,3 +183,40 @@
 # arr = [2,2,2,2,5,5,5,8]
 # k = 3
 # threshold = 4
+
+
+target = 2
+
+matrix = [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]]
+
+
+def searchMatrix(matrix, target):
+    T = 0
+    B = len(matrix) - 1
+
+    while T <= B:
+        M = (T + B) // 2
+        if target < matrix[M][0]:
+            B = M - 1
+        elif target > matrix[M][len(matrix[M]) - 1]:
+            T = M + 1
+        break
+
+    L = 0
+    R = len(matrix[row]) - 1
+
+    while L <= R:
+        M = (L + R) // 2
+        if target < matrix[row][M]:
+            R = M - 1
+
+        elif target > matrix[row][M]:
+            L = M + 1
+
+        else:
+            return True
+
+    return False
+
+
+searchMatrix(matrix, target)
