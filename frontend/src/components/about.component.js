@@ -36,6 +36,7 @@ const About = () => {
             <li>Gym</li>
             <li>Coding ;)</li>
             <li>Tennis</li>
+            <li>Solving Leetcode, sadiomascist to list this as a hobby? LOL</li>
           </ul>
         </div>
         <h1>Music</h1>
