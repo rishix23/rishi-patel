@@ -185,38 +185,44 @@
 # threshold = 4
 
 
-target = 2
+# target = 2
 
-matrix = [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]]
-
-
-def searchMatrix(matrix, target):
-    T = 0
-    B = len(matrix) - 1
-
-    while T <= B:
-        M = (T + B) // 2
-        if target < matrix[M][0]:
-            B = M - 1
-        elif target > matrix[M][len(matrix[M]) - 1]:
-            T = M + 1
-        break
-
-    L = 0
-    R = len(matrix[row]) - 1
-
-    while L <= R:
-        M = (L + R) // 2
-        if target < matrix[row][M]:
-            R = M - 1
-
-        elif target > matrix[row][M]:
-            L = M + 1
-
-        else:
-            return True
-
-    return False
+# matrix = [[1, 3, 5, 7], [10, 11, 16, 20], [23, 30, 34, 60]]
 
 
-searchMatrix(matrix, target)
+# def searchMatrix(matrix, target):
+#     T = 0
+#     B = len(matrix) - 1
+
+#     while T <= B:
+#         M = (T + B) // 2
+#         if target < matrix[M][0]:
+#             B = M - 1
+#         elif target > matrix[M][len(matrix[M]) - 1]:
+#             T = M + 1
+#         break
+
+#     L = 0
+#     R = len(matrix[row]) - 1
+
+#     while L <= R:
+#         M = (L + R) // 2
+#         if target < matrix[row][M]:
+#             R = M - 1
+
+#         elif target > matrix[row][M]:
+#             L = M + 1
+
+#         else:
+#             return True
+
+#     return False
+
+
+# searchMatrix(matrix, target)
+
+arr1 = [1, 2]
+arr2 = [1, 2, 3]
+
+if arr1 in arr2:
+    print("match")

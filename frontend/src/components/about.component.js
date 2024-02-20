@@ -17,13 +17,17 @@ const About = () => {
 
           <h2>Languages</h2>
           <ul>
+            <li>DevOps Section:</li>
+            <li>AWS</li>
+            <li>Ansible</li>
+            <li>Terraform</li>
+            <li>Python</li>
+            <li>Bash</li>
             <li>C#</li>
             <li>JavaScript</li>
             <li>ReactJS</li>
             <li>Node.js</li>
             <li>Express.js</li>
-            <li>Python</li>
-            <li>Terraform</li>
             <li>Organise list/layout + add more in different section</li>
           </ul>
 
