@@ -221,8 +221,36 @@
 
 # searchMatrix(matrix, target)
 
-arr1 = [1, 2]
-arr2 = [1, 2, 3]
 
-if arr1 in arr2:
-    print("match")
+def subsets(nums):
+    res = []
+    subset = []
+
+    def dfs(i):
+        print("Current Subset is:", subset, "and i is:", i)
+        if i >= len(nums):
+            return res.append(subset.copy())
+
+        subset.append(nums[i])
+        dfs(i + 1)
+
+        subset.pop()
+        dfs(i + 1)
+
+    dfs(0)
+
+    print(res)
+
+
+subsets([1, 2, 3])
+
+# m = [1, 2, 4, 5, 6, 7]
+# arr = []
+# n = [1, 2]
+# if len(m) == 0:
+#     arr = arr + n
+# if len(n) == 0:
+#     arr = arr + m
+
+# if len(m) % 2 == 0:
+#     print(True)
