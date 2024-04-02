@@ -222,35 +222,24 @@
 # searchMatrix(matrix, target)
 
 
-def subsets(nums):
-    res = []
-    subset = []
+# def subsets(nums):
+#     res = []
+#     curComb = []
 
-    def dfs(i):
-        print("Current Subset is:", subset, "and i is:", i)
-        if i >= len(nums):
-            return res.append(subset.copy())
+#     def dfs(, k):
+#         if len(curComb) == k:
+#             return res.append(curComb.copy())
+#         if i > n:
+#             return
 
-        subset.append(nums[i])
-        dfs(i + 1)
+#         for j in range(i, n+1):
+#             curComb.append(nums[i])
+#             dfs(j+1)
+#             curComb.pop()
 
-        subset.pop()
-        dfs(i + 1)
+#         subset.pop()
+#         dfs( + 1)
 
-    dfs(0)
+#     dfs(0)
 
-    print(res)
-
-
-subsets([1, 2, 3])
-
-# m = [1, 2, 4, 5, 6, 7]
-# arr = []
-# n = [1, 2]
-# if len(m) == 0:
-#     arr = arr + n
-# if len(n) == 0:
-#     arr = arr + m
-
-# if len(m) % 2 == 0:
-#     print(True)
+#     print(res)
