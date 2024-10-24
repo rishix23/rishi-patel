@@ -5,3 +5,4 @@ server/.env
 frontend/.env
 todo
 frontend/src/components/Modal.js
+rishi-test.pem

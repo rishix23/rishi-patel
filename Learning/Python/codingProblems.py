@@ -243,3 +243,210 @@
 #     dfs(0)
 
 #     print(res)
+
+
+# import heapq
+
+# nums = [2, 2, 4, 4]
+# k = 2
+
+# for num in nums[:k]:
+#     print(num)
+# distances = []
+# heapq.heapify(distances)
+# for num in nums:
+#     second_value = num * 3
+#     heapq.heappush(distances, (second_value, num))
+
+# print(distances)
+# print(distances, distances[1])
+
+# from collections import deque
+
+# q = deque()
+
+# q.append((1, 2))
+
+# item = q.popleft()
+
+# print(item[0], item[1])
+
+
+# def bestSum(targetSum, numbers, memo=None):
+#     if memo is None:
+#         memo = {}
+
+#     if targetSum in memo:
+#         print(f"Returning memoized result for target {targetSum}: {memo[targetSum]}")
+#         return memo[targetSum]
+#     if targetSum == 0:
+#         return []
+#     if targetSum < 0:
+#         return None
+
+#     print(f"Attempting to find the best sum for target {targetSum}")
+
+#     shortest_combination = None
+
+#     for num in numbers:
+#         remainder = targetSum - num
+#         print(f"Current number: {num}, Remainder: {remainder}")
+
+#         result = bestSum(remainder, numbers, memo)
+
+#         if result is not None:
+#             combination = result.copy()  # Make a copy of the result
+#             combination.append(num)
+#             print(f"Combination found: {combination}")
+
+#             if shortest_combination is None or len(combination) < len(
+#                 shortest_combination
+#             ):
+#                 shortest_combination = combination
+#                 print(
+#                     f"New shortest combination for target {targetSum}: {shortest_combination}"
+#                 )
+
+#     memo[targetSum] = shortest_combination
+#     print(f"Memoizing result for target {targetSum}: {shortest_combination}")
+#     return memo[targetSum]
+
+
+# # Example usage:
+# # print(bestSum(7, [5, 3, 4, 7]))  # Output: [7] or [4, 3]
+# print(bestSum(8, [1, 4, 8]))  # Output: [3, 5] or [5, 3]
+
+
+# # 2,2,2,2 -> 0 ([] -> [2] -> [2,2] -> [2,2,2] -> [2,2,2,2])
+# # 8 -> 0 ([] -> [8])
+
+
+# def bestSum(targetSum, nums, memo):
+#     if targetSum in memo:
+#         return memo[targetSum]
+#     if targetSum == 0:
+#         return []
+#     if targetSum < 0:
+#         return None
+
+#     shortestCombination = None
+
+#     for num in nums:
+#         remainder = targetSum - num
+#         reamainderResult = bestSum(remainder, nums, memo)
+#         if reamainderResult is not None:
+#             combination = reamainderResult.copy()
+#             combination.append(num)
+#             if shortestCombination is None or len(combination) < len(
+#                 shortestCombination
+#             ):
+#                 shortestCombination = combination
+#                 memo[targetSum] = shortestCombination
+
+#     return shortestCombination
+
+
+# print(bestSum(100, [1, 2, 5, 25], {}))
+
+
+# # List of strings
+# string_list = ["abc", "def", "abcde", "f", "abcdef"]
+
+# # Given string
+# given_string = "abcdef"
+
+# string_list = ["a", "aa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaaaaaaaaaaa"]
+
+# # Given string
+# given_string = "aa"
+
+
+# def canConstruct(string, string_list, memo):
+#     if string in memo:
+#         return memo[string]
+#     if len(string) < 1:
+#         return True
+
+#     # Iterate through the list and find the matching prefix
+#     for s in string_list:
+#         if string[: len(s)] == s:
+#             suffix = string[len(s) :]
+#             if canConstruct(suffix, string_list, memo):
+#                 memo[string] = True
+#                 return True
+
+#     memo[string] = False
+#     return False
+
+
+# print(canConstruct(given_string, string_list, {}))
+
+
+# def countConstruct(string, string_list, memo):
+#     if string in memo:
+#         return memo[string]
+#     if len(string) < 1:
+#         return 1
+
+#     count = 0
+
+#     # Iterate through the list and find the matching prefix
+#     for s in string_list:
+#         if string[: len(s)] == s:
+#             suffix = string[len(s) :]
+#             numOfWays = countConstruct(suffix, string_list, memo)
+#             count += numOfWays
+
+#     memo[string] = count
+#     return count
+
+# print(countConstruct(given_string, string_list, {}))
+
+
+# List of strings
+# string_list = ["ab", "abc", "cd", "def", "abcd", "ef", "c"]
+
+# # Given string
+# given_string = "abcdef"
+
+
+# def allConstruct(string, string_list, memo):
+#     if string in memo:
+#         return memo[string]
+#     if len(string) == 0:
+#         return [[]]
+#     print("string is:", string)
+
+#     all_constructions = []
+#     for s in string_list:
+#         if string[: len(s)] == s:
+#             suffix = string[len(s) :]
+#             result = allConstruct(suffix, string_list, memo)
+#             if result is not None:
+#                 print("result currently is:", result)
+#                 for combination in result:
+#                     combination = combination.copy()
+#                     combination.append(s)
+#                     print("combination:", combination)
+#                     all_constructions.append(combination)
+#                     print("all_contructions:", all_constructions, "for string:", string)
+
+#     memo[string] = all_constructions
+#     return all_constructions
+
+
+# print(allConstruct(given_string, string_list, {}))
+
+# s = "leetcode"
+# # wordDict = ["leet", "code"]
+
+# # for string in wordDict:
+# #     if s[: len(string)] == string:
+# #         print("True:", s[: len(string)])
+# #         print("Rest is:", s[len(string) :])
+
+# for index, value in enumerate(s):
+#     print(index)
+
+for j in range(2, 3):
+    print(j)
