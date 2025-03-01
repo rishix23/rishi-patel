@@ -37,7 +37,7 @@ you need the access key id, secret, region, and output
 - IAAS
 - AZ resiliant
 - Local on-host storage available or Elastic Block Store (EBS)
-- Storage is charged when isntance is stopped
+- Storage is charged when instance is stopped
 - AMI has permissions, root volume, block device mapping
 
 ## S3 Basics
@@ -569,14 +569,14 @@ Regionally resiliant gateway attached to a VPC
 - **Instances have public/private IPv4 addresses and the instance OS only sees the private IP address**
 - **Instances with IPv6 are are public by default so no translation is necessary**
 
-## Bation Host or Jump Box
+## Bastion Host or Jump Box
 
 Often the only way into the private VPC
 
 ## Stateful and Stateless Firewalls
 
 - Stateless doesnt know state so you need to define two rules
-- Stateful is intelligent enough to understand the connection so an explicit allow requent will implicity allow the response
+- Stateful is intelligent enough to understand the connection so an explicit allow request will implicity allow the response
 
 ## NACLS
 
@@ -635,3 +635,1017 @@ Run on EC2 hosts
 Block storage - Volume presented to the OS as a collection of blocks and is mountable/bootable
 File storage - presented as a file share and has structure, mountable NOT bootable
 Object storage - collection of objects flat not mountable/not bootable
+
+IO(Block) size x IOPS = Throughput
+
+## EBS ?????
+
+- Block storage - raw disk allocations (volume)
+- Storage is provisioned in ONE AZ
+- EBS volume can be attached and detached
+- Snapshots can be copied across regions to provide global resiliance
+- Used for boot volumes
+
+### GP2 / GP3
+
+### Provisioned IOPS SSD
+
+Provides high performance for mission-critical, low-latency, or high-throughput workloads.
+
+### HDD Based - Low cost, low performance
+
+- Throughput Optimized HDD (st1) - big data, data warehouse, log processing
+- Cold HDD (st2) - archives
+
+## Instance Stores - Ephermeal
+
+- Phycially connected block storage devices
+- Highest storage performance
+- _Cant attach afterwards creation_
+
+## Instance Store vs EBS
+
+## DEEP REVIEW ##
+
+- Persistant storage -> EBS
+- Resiliant storage -> EBS
+- Storage isolate from lifecycle changes -> EBS
+- Cost -> instance store
+- Cheap = ST1 or ST2
+- Throughput/streaming -> ST1
+- GP2/3 - up to 16,000 IOPS per volume
+- IO1/2 - up to 64,000 IOPS
+- RAID0 + EBS up to 260,000 IOPS
+- More than 260,000 IOPS -> instance store
+
+## EBS Snapshots
+
+Becomes region resiliant
+
+- First snapshot is full copy of 'data' to S3
+- Future snapshots are incremental
+- Snapshots can be copied to another region
+- _Snapshots restore lazily_
+- Fast Snapshot Restore - immediate restore
+
+## EBS Encryption
+
+Accounts an be set up to encrypt by deafult - default KMS key
+Otherwise choose KMS key to use
+Each volume uses 1 DEK
+
+- _Snapshots and future volumes use the same DEK_
+- _Cant change a volume to be encrypted_
+- _OS isnt aware of encryption_
+
+## EC2 Network and DNS Architecture
+
+- Secondary ENI + MAC = Licensing
+- Differnt security groups - multiple interfaces
+- **OS doesnt see public IPv4**
+- IPv4 public ips are dynamic - stop and start = change
+- Public DNS = private IP in VPC, public everywhere else
+
+## AMIs
+
+Regional
+
+- **One region, only works in that region**
+- AMI Baking - Creating an AMI from a configured EC2
+- **Cant be edited**
+- **Can be copied between regions**
+- Your account has access only by default
+
+## EC2 Purchase Options
+
+- On-demand - Default option
+- Spot - not reliable - AWS sells capacity at discounts using a max price budget of the customer
+- Reserved - Long term consistent use - once committed to reserve - get them for cheap
+- Dedicated Host - belongs to you only and only pay for the host
+- Dedicated Instances - your own instances but dont have to manage host
+- Scheduled Reserved Instances -
+
+## EC2 Metadata
+
+- **169.254.169.254/latest/meta-data**
+- Environment, networking, authentication
+
+# CONTAINERS AND ECS
+
+- Container definition - Images/ports
+- Task definition (blueprint) - Security (Task Role), which Docker containers to run, how much CPU/memoery to allocate, IAM roles
+- Task role - IAM role which the task assumes
+- Service - how many copies, HA, restarts
+
+## Cluster Types
+
+- EC2 Mode - pay for EC2 instances, price concious
+- Fargate Mode - overhead concious, small/burst workloads, batch/periodic workloads
+
+## ECR
+
+- Integrated with IAM
+
+## EKS
+
+- AWS managed Kubernetes - open source and cloud agnostic
+- EKS Cluster - EKS Control plane + EKS Nodes
+- Storage - can use EBS
+
+# ADVANCED EC2
+
+# Bootstrapping
+
+- EC2 Build Automation
+- http://169.254.169.254/latest/user-data
+- Anything in usere data is executed by instance OS
+- **ONLY executed on launch**
+- Not secure
+- Boot-to-service-time
+
+- cfn-init - helper script - installed on EC2 OS (desired state)
+
+## EC2 Instance Roles
+
+- EC2 assumes the role to have access to other AWS services
+- Credentials are inside meta-data
+
+## SSM Parameter Store
+
+- Storage for configuration and secrets
+- Strings, strings list, secure string
+- Plaintext and ciphertext
+- Database strings
+
+## System and application logs
+
+- CloudWatch agent needs to be installed into the EC2
+
+## Placement Groups
+
+- Cluster - pack instances close together - 10Gbps - _One AZ ONLY_
+- Spread - provides infratructure isolation _7 instances per AZ_
+- Partition - more than 7 instances in a AZ - _max 7 partitions per AZ_ - each partition has its own rack - no sharing between paritions - topology aware
+
+## Dedicated Hosts
+
+- Host dedicated to you
+- No instance charges just the host
+
+## Enhanced Networking and EBS Optimized
+
+- Uses SR-IOV - NIC is virtualization aware
+- Higher I/O + lower host CPU usage
+- More bandwidth
+
+- EBS optimized means dedicated capacity for EBS
+- Cost extra, enabled by default
+
+# ROUTE 53
+
+Globally resiliant
+
+## Public Hosted Zones
+
+- DNS DB (zone file) hosted by R53 (Public Name Servers)
+- Accessible from the public zone
+
+## Private Hosted Zones
+
+- Not public only accessible via VPC
+- Available in 1 or more VPCs
+
+## CNAME vs ALIAS
+
+- CNAME maps name -> name (www.catagram.io => catagram.io) cant reference the naked domain
+- Alias records map a NAME to an AWS resource
+- Alias can be used for both aked/apex and normal records
+- **For AWS Resources always use Alias**
+
+## Simple Routing
+
+- No health checks
+- Use when you want to route requests to **one** service such as a web server
+- Doesnt support health checks
+
+## Health Checks
+
+- Configured seperately, but **used** by records
+- Health checkers located globally
+- Check every 30s
+
+## Failover Routing
+
+- Secondary record value is returned if primary record health check fails
+
+## Multi Value Routing
+
+Improves availability
+
+- Returns mumtiple values (IPs) for each record
+- Allows to check the health of each resource
+
+## Weighted Routing
+
+Simple load balancing or testing new software versions
+
+- Adds weights to a record and returned based on that weight
+- If only want 5% to go to a server then you can set the weight to 5 for that record
+
+## Latency Based Routing
+
+When optimising for performance and user experience
+
+- Speciifes the region in the record and lowest latency record is returned
+
+## Geolocation Routing
+
+- Only returns relevant records (restricting content)
+
+## Geoproximity Routing
+
+- Works on distance between user and resources
+- Uses bias to route more/less traffic to a certain region
+
+## Interoperability
+
+- Registrar and Domain Hosting
+
+## Implementing DNSSEC in Route 53
+
+- R53 creates a zone signing key
+- Create a key signing key used by R53 on the records and the top level domain
+
+# RDS
+
+## ACID and BASE
+
+Transactional models
+
+ACID = consistency (atomic, consistent, isolated, durable)
+BASE = availibility (Basically available, soft state, eventually consistent)
+
+## Databases on EC2
+
+- Access to DB instance OS, Advanced DB tuning, DB or DB version AWS does not provide, specific OS/DB combination AWS dont provide
+
+## Architecture
+
+- Need a subnet group
+- **No access to OS or SSH**
+- Instances can have multiple DBs on them
+- Has its own dedicated EBS storage per instance
+- Synchronus replication to standby
+- Asynchronus replication to read replicas
+- Backups happen to S3
+
+## Multi AZ - Instance
+
+- **Synchronus replication to stand by instance**
+- Reads from standby during failovers
+- Not free tier
+- **One stand by replica ONLY**
+- Same region only
+- Backups taken from stand by
+
+## Multi AZ - Cluster
+
+- **1 Writer and 2 reader instances using synchronus replication**
+- Fast writes to local storage => flushed to EBS
+- Reader instances can be used for reads
+- Data is commited when 1+ readers finishes writing
+- Cluster endpoint points at cluster while reader endpoints point at reader
+- Instance endpoints - point at specific instances - used for testing/fault finding
+
+## RDS Backups
+
+- Automate backups stored in AWS S3 -> 0-35 days
+- Snapshots - full -> then incremental -> taken from standby
+- **Manual Snapshots dont expire -> you need to delete**
+- Can replicate backups to another region - not by default
+
+## RDS Restores
+
+- New RDS instance created when using automated backup/snapshot to restore from
+- Endpoint changes after restore
+
+## RDS Read Replicas
+
+- Seperate instance
+- **Asynchronous replication from primary to read replicas**
+- 5x direct read-replicas per DB instance
+- Failure only
+- Read only - until promoted
+
+## RDS Security
+
+- SSL/TLS in transit
+- RDS supports EBS volume encryption
+- Encyption cant be removed once added
+- MYSQL and Oracle support Transparent Data Encryption (handled with DB engine)
+
+## RDS IAM Authentication
+
+- Policy attached to user/role maps to -> local db user
+- **Only used for authentication not authorization**
+
+## RDS Custom
+
+## Aurora
+
+Supports auto scaling
+**Supports 3+ AZ resiliance**
+
+- Uses a cluster
+- A single primary instance + 0 or more replicas
+- Uses cluster volume
+- Replicas happen on cluster volume storage layer
+
+## Aurora Severless
+
+- Aurora Capacity Units
+- Infrequently used applications/new applications
+- Unpredictable workloads
+
+## Aurora Global Database
+
+- Cross Region DR and BC
+- Global Read Scaling
+
+## Aurora Multi Master Writes
+
+- All instances are R/W
+- With a write after committed to storage its replicated across other instances
+
+## RDS Proxy
+
+- Establishes to the DB instance
+- Lambda connects to proxy which is much quicker than connecting directly to instance
+- Abstracts client away from failover events
+- Too many connections error, using Lambda, long running applications
+- Fully managed DB proxy for RDS/Aurora
+- Only accessible from VPC
+- Uses SSL/TLS
+- Reduces failover time by over 60%
+
+## Database Migraton Service
+
+- Uses source/destination endpoints and migration instance to migrate data
+- Schema Conversion Tool - converting one DB engine to another (different ones such Oracle to PostgreSQL)
+
+# ELASTIC FILE SYSTEM
+
+- Can be mounted in Linux only
+- Shared between many EC2 instances
+- Have mount targets with IPs in every AZ
+- General or max I/O
+- Burstbale (unpredectible) and provisioned (predictable)
+- Standard and infrequent access
+
+## AWS Backups
+
+- Fully managed data-protection backup
+- Consolidate management into one place
+- Backup plans - frequency, window, lifecycle, vault
+- Resources - what resources are backed up
+
+- Vault-lock - write once, read many
+- On-demand - manual backups created as necessary
+- Point in time recovery
+
+# HA AND SCALING
+
+## Elastic Load Balancer Architecture
+
+- ELB is a DNS A record pointing at 1+ nodes per AZ
+- Nodes (in one subnet per AZ) can scale
+- Internet-facing means public IPv4s
+- Internal is private only
+- EC2 doesnt need to be public to work with a LB
+- Require 8+ free IPs per subnet, and a /27 subnet to allow scaling
+
+## ALB vs NLB
+
+- ALB is layer 7 listens on HTTP/HTTPS
+- Content type, cookies, custom headers, user location, and app behaviour
+- SSL termination happens on the ALB
+- **ALBs must have SSL certs if HTTPS is used**
+- Slower than NLB
+- Rules direct connections which arrive at a listener
+
+- NLB layer 4 understands TCP, UDP, TCP_UDP
+- No understanding of HTTP/HTTPS
+- Really fast
+- SMTP, SSH, Game servers
+- Have static IPs for whitelisting
+- Forward TCP to instances -> unbroken encryption
+- Private link
+
+## Launch Configuration and Launch Templates
+
+- Allow EC2 config to be defined in advance
+- AMI, Instance type, storage, key pair, userdata, IAM Role
+- Used for auto scaling groups
+- Launch templates allow to launch EC2s
+
+## Auto Scaling Groups
+
+- Automatic scaling and self-healing for EC2
+- Uses LCs and LTs
+- minimum:desired:maximum capacity
+
+## ASG Scaling policies
+
+- Manual, scheduled (know there will be demand or not)
+- Simple (CPU above 50% => +1 CPU below 50% => -1),
+- Stepped more flexible can define CPU between 50%-60%, 60%-70%
+- Target tracking (50% CPU on average)
+- SQS Queue
+- Scheduled Scaling → Scale at fixed times (e.g., add instances every morning at 8 AM).
+- Predictive Scaling → Uses machine learning to anticipate demand spikes (good for predictable workloads).
+
+## ASG Lifecycle Policies
+
+- Perform an action before the EC2 is launched/terminated like indexing/backing up data
+
+## ASG Health Checks
+
+EC2 - anything other than running -> unhealthy
+ELB - healthy = running and passing ELB check
+Custom - using external tool to determine healthy/unhealthy
+
+## SSL Offload and Session Stickiness
+
+- Bridging - connection is terminated on ELB, SSL cert is installed on ELB
+- Pass through - client sends to NLB and it goes through unbroken to instances
+- Offload - SSL terminated and then unecrypted passed to instance using HTTP - EC2 doesnt need SSL cert installed
+
+- Stickiness - session is hosted on EC2 so ALB provides a cookies to reference which instance client gets sent to
+
+## Gateway Load Balancers
+
+- Inbound/Outbound traffic inspection
+- GWLB endpoints - traffic enters/leaves these endpoints
+- Balances packets against backend applicances
+
+# SEVERLESS AND APPLICATION SERVICES
+
+## AWS LAMBDA
+
+- Function as a service
+- **15m timeout**
+- Public networking - public internet + public AWS resources
+- Private networking - access all VPC based resources, obeys all VPC networking rules (need NAT GW/IGW for VPC Lambdas to access internet resources)
+
+- **Execution role for Lambda**
+
+- Synchronus - client waiting for result to be returned, errors and retries has to be handled within client
+- **Asynchronus - S3 for example isnt waiting for a response if it uses lamda to upload a picture - idempotent**
+  - Events can be sent to a dead letter queue after repeated failed processing
+  - Supports destinations (SQS, SNS) where successful or failed events can be sent
+- Event driven - typically used on streams/queues which dont support event generation to invoke lambda
+
+  - Permissions from the lambda execution role are used by event source mapping to interact with the event source
+  - SQS or SNS topics can be used for any discarded failed batches
+
+- Lambda function can reuse execution context, but has to assume it cant.
+- Provisioned concurrecny - AWS keeps x amount of warm contexts
+
+## CloudWatch Events and Event Bridge
+
+- Observe if x happens or at y times do z
+- EventBridge is CloudWatch v2
+- A default event bus for the account
+- EventBridge monitors default event bus and match pattern rules -> rule executed -> can invoke a lambda
+
+## Severless Architecture
+
+### SNS
+
+Public AWS Service - HA and Scalable
+
+- Coordinates the sending and delivery of messages
+- Publisher sends messages to topics
+- Topics have subscribers which receive messages
+- Delivery status, delivery retries, SSE, cross account via topic policy
+
+### Step Functions
+
+State machines - start - state - ends
+
+- States are things which occur
+- Maximum duration 1 year
+- Standard workflow (default) and express
+
+## API Gateways
+
+HA, scalable, handles authorisation, throttiling, caching, CORS, etc.
+
+- Sits in betwwen clients and integrations such as AWS services (SNS, Lambda, HTTP endpoints)
+- Create and manage APIs
+- Provide APIs to use HTTP/HTTPS/Websocket APIs
+
+- Authentication -
+- APIs deployed to stages
+
+- 400 - Bad request
+- 403 - Access denied
+- 429 - Throttling error
+- 502 - Bad gateway - bad output returned by Lambda
+- 503 - Service unavailable
+- 504 - Integration/failure timeout
+
+- Cache TTL is 300 seconds
+
+## SQS Queues
+
+- Public HA queue
+- Asynchronus
+- **Standard garuntee atleast once deilvery - multi lane highway**
+- **FIFO - garuntee once delivery and order - one lane - nust have .fifo suffix**
+- **Visibily timeout - amount of time a message is hidden when its received. if its not already deleted it reappears for reprocessing**
+- Short polling - immediate
+- Long polling - longer polls
+- Encryption at rest and in transit
+- Delay queues - when added they are invisible, max of 15 mins
+- Dead letter queues - can be used for problem messages, when a receive count > max receive count then gets moved to dead letter queue
+
+## Kinesis Data Stream
+
+Public service and HA
+
+- Scalabale streaming service
+- Streams store 24 hours moving window of data
+- Data ingestion, analytics, monitoring, app clicks
+
+## Kinesis Data Stream Firehose
+
+- Load data for data lakes/data stores
+- **Near real time delivery**
+- Supports lambda
+- Can deliver to HTTP, Redshift, ElasticSearch, Splunk, and S3
+- Data can be sent directly to firehose
+
+## Kinesis Data Analytics
+
+- Real time processing of data
+- Ingests from data stream or firehose
+- Uses SQL
+- Election data, leadersboards for games, etc.
+
+## Kinesis Video Stream
+
+- Ingest live video data from producers
+- Security cameras, smartphones, cars, drones, etc
+- **Cant access directly via storage, only API**
+
+## Amazon Congnito
+
+- Authentication, authorization, user management for mobile/web apps
+- **User pools - allow to sign in and get a JWT (cant be used to access AWS services) and user management**
+- **Identity pool - allow you to access temporary AWS credentials**
+
+- **User pool token can be used with identity pool to get temporary AWS credentials**
+
+## AWS Glue 101
+
+- Severless extract, transform, and load
+- Moves and transforms data between source and destinations
+- Data catalog - peristent metadata about sources in a region
+
+## Amazon MQ
+
+Not a public service
+
+- Open source message broker
+- Provides queues/topics
+- Single instance
+- No AWS integration
+
+## Amazon AppFlow
+
+- Source/destination connector
+- Aggreagte data from different sources
+- Public endpoints
+- Contact records from Salesforce to Redshift
+
+# CLOUDFRONT
+
+- Content delivery network
+- Uses distributions which is a configuration
+
+## Beahaviours
+
+- Caching controls set on beaviour
+- Matches based a pattern
+- Specify HTTP methods
+- Configure field level encryption
+- Restrict viewer access
+
+## TTL and Invalidations
+
+- More frequent cache hits = less origin load
+- **Default TTL is 24 hours**
+- **Cache-control max-age/smaxage - value in seconds, direct CF to apply a TTL**
+- **Expires header - specifies specific date/time an object should expired**
+- **Custom origin or S3**
+
+- Cache invalidation happens on distribution using a pattern path such as images/cat1.img
+- Applies to all edge locations
+- Use versioned file names differnt file names for different versions
+
+## ACM
+
+Regional service
+
+- Lets you run public or private CA
+- **Generate (automatically renews) or import (responsible to renew) certificates**
+- **Only deploy certificates to supported services (CF and ALBs) not EC2**
+- **Certificates cannot leave region**
+- **Cloudfront always use us-east-1 for ACM - it uses a distribution to specify the certificate which sends it to edge locations**
+
+## Cloudfront SSL/TLS
+
+- By default uses \*.cloudfront.net certificate
+- Two SSL connections viewer -> cloudfront -> origin
+- Both need valid public certificates (and intermediate certificates)
+
+## Origin Types and Architecture
+
+- S3 Origins
+- **Use custom origin to configure ports or minimum SSL protocol version**
+
+## Securing the CF Content Delievery Path
+
+- Origin access identity is a type of identity
+- It can be asscociated with a distribution
+- CF becomes the OAI
+
+## Private Distribution and Behaviours
+
+- Public behaviours - open access to objects
+- Private behaviours - requests require a signed cookie or URL
+- **OLD - A CF key is created by an account root user**
+- **OLD - The account is added as a trusted signer**
+- **NEW - Trusted key groups**
+- **Signed URLs provides access to one object**
+- **Cookies provide access to groups of objects - use for groups of call such as all cat gifs**
+
+## Lambda@edge
+
+- Can run Lambda at edge locations
+- Lambda@Edge allows cloudfront to run lambda function at CloudFront edge locations to modify traffic between the viewer and edge location and edge locations and origins
+
+## AWS Global Accelerator
+Designed to improve global network performance by offering entry point onto the global AWS transit network as close to customers as possible using Anycast IP addresses
+
+- Moves AWS Network closer to customer
+- Connections enter at edge using anycast IPs
+- Transfer over AWS backbone to 1+ locations
+- **Can be used for non HTTP/HTTPS (TCP/UDP) - difference from CloudFront**
+
+# ADVANCED VPC NETWORKING
+
+## VPC Flow Logs
+
+- **Captures metadata**
+- Attached to a VPC - all ENIs in that VPC
+- Attached to subnets - all ENIs in that subnet
+- Attached to ENIs directly
+- Log destinations like S3 or CloudWatch Logs
+- **ICMP = 1, TCP = 6, UDP = 17**
+
+## Egress only Internet Gateway
+
+HA by default
+
+- Allows IPv6 IPs to access public internet
+- Inbound denied
+
+## Gateway Endpoints
+
+**HA across all AZs in a region by default**
+
+- Provide private access to S3 and DynamoDB
+- **Uses a prefix list and route table**
+- Not accessible outside VPC they are in
+
+## Gateway Interfaces
+
+- **Provide private access to S3 and DynamoDB using DNS**
+- **Added to specific subnets - an ENI - not HA**
+- **Uses DNS and a private IP address for the interface endpoint**
+- Network access controlled by security groups
+- TCP and IPv4 only
+- Use private link
+- Private traffic travels to interface endpoint -> public service
+
+## VPC Peering
+
+Direct encrypted between 2 VPCs only
+
+- Works same/cross-region and same/cross-account
+- **Not transitive**
+
+# HYBRID ENVIRONMENTS AND MIGRATION
+
+## Border Gateway Protocol
+
+## IPSEC VPN Fundamentals
+
+- Sets up secure tunnels across insecure networks
+- Provides authentication and encryption
+
+## AWS Site-to-Site VPN
+
+Full HA
+
+- A logical connection between a VPC and on-prem network encrypted using IPSec running over public internet
+- **VPN speed limit of 1.25Gbps**
+- **Latency considerations, inconsistent, public internet**
+- **Quick to setup in hours for all configurations**
+
+## Direct Connect
+
+Business Prem -> DX Location -> AWS Region
+Port allocation at a DX Location
+
+- **Low latency/high throughput**
+- DX Location is not owned by AWS
+- Comms provider extends the DX port into your business premises if no space/equipment at DX Location
+
+## Public VIF + VPN
+
+- Private encrypted connection for DX
+
+## Transit Gateway
+
+Network transit hub to connect VPCs to on-premises networks
+
+- Supports transitive routing
+- Can be used to create global networks
+- Peer with different regions, same or cross account
+
+## Storage Gateway
+
+Supports migrations, extensions, storage tiering, DR, and replacement of backup systems
+
+### Volume Stored
+
+- iSCSI Raw Block Devices
+- **All stored locally**
+- **Great for full disk backup**
+- **Assists with DR, create EBS volumes in AWS**
+- **Local volumes on prem -> asyncrhonus copy to S3 -> EBS snapshots are created**
+
+### Volume Cached
+
+- **Volume cached primary data stored in S3 which is AWS managed**
+- **Data is stored in AWS and you have a local volume cache on premises**
+- **Capacity extension**
+- Frequently accessed data
+
+### Tape - VPL Mode
+
+### File
+
+- **Bridges on-premises file storage and S3**
+- **Mount points via NFS or SMB**
+- **Files stored into a mount point are visible objects in S3**
+- **S3 objects visible as files on-premises files**
+- **Primary data held on S3**
+
+## Snowball - Edge - Snowmobile
+
+Transfer data in/out of AWS
+
+- **Snowball (10TB - 10PB) and multiple devices sent to multiple business premises which is only storage**
+- **Snowball Edge - both storage and compute - data processing on ingestion**
+- **Snowmobile - portable DC within shipping container on a truck (10PB+)**
+
+## AWS Directory Service
+
+- Simple AD Mode - an implementation of Samba 4 (compatibility with basics AD functions)
+- AWS Managed Microsoft AD - an actual Microsoft AD DS Implementation
+- AD Connector - proxies requests back to an on-premises directory (existing active directory on-premises and want a minimal AWS footprint to run isolated services which need a directory)
+
+## DataSync Service
+
+Orchestrate the movement of large scale data (amounts or files) from on-premises NAS/SAN into AWS or vice-versa
+
+- Needs to integrate with EFS, FSx, S3 or bi drectional/incremental/schedule transfer
+
+## FSx for Windows File Server
+
+Fully managed native windows native file servers/shares
+
+- **Native file system accessible over SMB**
+- **Windows permission model**
+- **Integrates with DS and your own directory**
+
+## FSx for Lustre
+Amazon FSx For Lustre is a high-performance file system for fast processing of workloads.
+
+- POSIX
+- It delivers extreme performance for scenarios such as Big Data, Machine Learning and Financial Modeling
+- Open-source parallel file system which stores data across multiple network file servers to maximize performance and reduce bottlenecks
+
+## AWS Transfer Family
+
+Managed file transfer service - supports transferring to or from S3 and EFS
+
+- FTP/FTPS/SFTP/AS2
+
+# SECURITY, DEPLOYMENT, AND OPERATIONS
+
+## AWS Secrets Manager
+
+- **Designed for secrets**
+- **Supports automatic rotation using Lambda**
+- **Directly integrates with RDS**
+
+## Application Layer 7 Firewalls
+
+- **L3/L4 request/response are seperate an unrelated**
+- **L5 (session) request/response can be considered as part of one session (reduces admin overhead)**
+- **L7 firewalls are aware of HTTP and can detect abnormal requests and protocol specific attacks**
+- **HTTPS terminated at firewall then new encrypted L7 connection from FW to backend**
+- **Data can be inspected, blocked, replaced, or tagged and it can identify, block, and adjust specific applications**
+
+## WAF - NEED REVIEW
+
+## AWS Shield
+
+AWS Shield Standard and Advanced
+
+- Protects against DDOS attacks
+- Standard is free and advanced costs
+- Common L3/L4 attacks
+- Shield standard is automatically provided with Cloudfront and R53
+
+## Cloud HSM
+
+A single tenant Hardware Securty Module (HSM) which is AWS managed fully
+
+- **Fully FIPS 140-2 Level 3**
+- **Access using industry standard APIs like PKCS#11, Java cryptograpghy extensions, Microsoft cryptong libraries**
+- **No native integration with AWS services**
+- **Offload the SSl/TLS processing for web servers**
+- **Enable transparent data encryption (TDE) for Oracle dbs**
+- **Protect the private keys for an issuing certificate authority**
+
+## AWS Config
+
+- Record config changes over time on resources
+- Auditing change and complicance with standards
+- All the information is stored regionally in an S3 config bucket
+
+## Amazon Macie
+
+Data Security and Data Privacy Service
+
+- Discover, monitor, and protect data which is stored in S3 buckets
+
+## AWS Inspector
+
+- **Scans EC2 isntances and the instance OS**
+- **Finds vulnerabilities and deviations**
+- Provides a report of findings ordered by priority
+- Network assesment (agentless)
+- Network and host assesment (agent)
+- Network reachability
+- **CVE**
+- **CIS benchmarks**
+- **Security best practices for Amazon Inspector**
+
+## AWS Gaurdduty
+
+Guard Duty is an automatic threat detection service which reviews data from supported services and attempts to identify any events outside of the 'norm' for a given AWS account or Accounts
+
+# CLOUDFORMATION
+
+Written in YAML or JSON
+
+- Template parameters - ones you can specify, pseudo paramters - AWS specified
+- **Mappings - Uses key/values which improves template portability**
+- **Outputs - accesible from parent stack when nesting and exporting allowing cross-stack references**
+
+- **Resources in a stack share a lifecycle**
+- **Whole templates can be reused in other stacks**
+- **Nested stacks - Use when stacks form one of the solutions - lifecycle linked**
+- **Stacks designed to be isolated and self-contained**
+- **Outputs can be exported to be referenced by other stacks**
+- **Export name must be a unique name in that region where fn::ImportValue can be used instead of Ref**
+- **Use cross-stack references for service-oriented, different lifecycles, or stack reuse**
+- **StackSets are a feature of CloudFormation allowing infrastructure to be deployed and managed across multiple regions and multiple accounts from a single location**
+- **CFN uses the permission of the identity logged in to create resources**
+- **Stack roles allow an IAM role to be passed into the stack via PassRole**
+- **The identity creating the stack doesnt need resource permissions, just PassRole**
+- **CloudFormationInit and cfn-init are tools which allow a desired state configuration management system to be implemented within CloudFormation**
+- **The cfn-hup helper is a daemon that detects changes in resource metadata and runs user-specified actions when a change is detected**
+- **Change sets allow you to preview how proposed changes to a stack might impact your running resources**
+- **Custom resources let CFN integrate with anything it doesnt yet**
+
+# NOSQL DATABASES AND DYNAMODB
+
+Public DBaaS - key/value
+
+- No self-managed server or infrastructure
+
+## DynamoDB Consistency, Presistance, and Performance
+
+- **Every operation consumes at least 1 RCU/WCU**
+- **1 RCU is 1x4KB read operation per second**
+- **1 WCU is 1x1KB write operation per second**
+
+## DynamoDB Local and Global Secondary Indexes
+
+- **LSI must be created with table**
+- **LSI shares the RCU/WCU with the table**
+- **Query can only work on 1 PK at a time**
+- **Alternative sort key (local secondary index)**
+- **Some or all atrributes (projection)**
+
+- **GSI can be created anytime**
+- **Alternative PK/SK**
+- **Have their own RCU/WCU allocations**
+
+## DynamoDB Streams
+
+- DynamoDB Streams are a 24 hour rolling window of time ordered changes to ITEMS in a DynamoDB table
+- Lambda can be integrated to provide trigger functionality - invoking when new entries are added on the stream
+
+## Global Tables
+
+- DynamoDB Global Tables provides multi-master global replication of DynamoDB tables which can be used for performance, HA or DR/BC reasons.
+
+## DynamoDB DAX
+
+DynamoDB Accelerator (DAX) is an in-memory cache designed specifically for DynamoDB. It should be your default choice for any DynamoDB caching related questions
+
+- Supports read caching of items and query/scan results
+- Supports write-through and read caching
+- Runs from within VPC
+- Good for read heavy workloads
+
+## DynamoDB TTL
+
+Timestamp for automatic deletions within a table
+
+## Amazon Athena
+
+Serverless interactive querying service
+
+- Querying AWS logs
+
+## Elasticache
+
+In-memory database which has high performance
+
+- **Managed Redis or Memcached as a service**
+- **Can be used to cache data for read heavy workloads with low latency requirements**
+- **Reduces DB workloads**
+- **Can be used to store sessiond data (Stateless Servers)**
+- **Requires application code changes**
+
+Memcached
+
+- **Uses simple data structures (string)**
+- **No replication**
+- **Multiple nodes (sharding)**
+- **No backups**
+- **Multithreaded**
+
+Redis
+
+- **Uses advanced data structures**
+- **Multi AZ**
+- **Replication (scale reads)**
+- **Supports backups**
+- **Transactions**
+
+## Redshift Architecture
+
+**Built on relational database model**
+Redshift is a column based, petabyte scale, data warehousing product within AWS
+
+- **Enhanced VPC routing**
+
+# AWS ARTIFACT
+
+AWS Artifact is your go-to, central resource for compliance-related information that matters to you
+
+- \*\*
+
+prev, right
+^
+|
+
+prev = self.right.prev
+next = self.right
+
+prev.next = node
+next.prev = node
+
+node.prev = prev
+node.next = next
