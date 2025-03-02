@@ -1158,9 +1158,9 @@ HA, scalable, handles authorisation, throttiling, caching, CORS, etc.
 
 - Public HA queue
 - Asynchronus
-- **Standard garuntee atleast once deilvery - multi lane highway**
-- **FIFO - garuntee once delivery and order - one lane - nust have .fifo suffix**
-- **Visibily timeout - amount of time a message is hidden when its received. if its not already deleted it reappears for reprocessing**
+- **Standard guarentee at least once deilvery - multi lane highway**
+- **FIFO - guarentee once delivery and order - one lane - nust have .fifo suffix**
+- **Visibily timeout - amount of time a message is hidden once received, and if it's not already deleted it reappears for reprocessing**
 - Short polling - immediate
 - Long polling - longer polls
 - Encryption at rest and in transit
@@ -1169,19 +1169,25 @@ HA, scalable, handles authorisation, throttiling, caching, CORS, etc.
 
 ## Kinesis Data Stream
 
+**Real-time data capture: Capture data from various sources, such as logs, metrics, social media, and IoT devices.**
 Public service and HA
 
 - Scalabale streaming service
-- Streams store 24 hours moving window of data
+- Streams store default of 24 hours of a moving window of data
+- Store data for up 365 days
 - Data ingestion, analytics, monitoring, app clicks
+- Requires manual scaling such as adjusting number of shards
 
 ## Kinesis Data Stream Firehose
 
-- Load data for data lakes/data stores
+Fully managed streaming service that automatically delivers data to AWS services like S3, Redshift, or Elasticsearch.
+
 - **Near real time delivery**
+- Load data for data lakes/data stores
 - Supports lambda
 - Can deliver to HTTP, Redshift, ElasticSearch, Splunk, and S3
 - Data can be sent directly to firehose
+- No persistent data storage—it just ingests and delivers the data
 
 ## Kinesis Data Analytics
 
