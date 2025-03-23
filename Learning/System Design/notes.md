@@ -22,3 +22,37 @@ A - Availability: Every request gets a response, even if the data might not be f
 P - Partition Tolerance: The system continues working even if parts are temporarily unable to communicate (e.g., online gaming servers during network issues).
 
 **In practice can only really have CP or AP but not CA**
+
+# Stream Processing Using Brokers
+
+producer -> broker -> consumer
+
+## Change data capture - specific to DB
+
+DB -> broker -> forward to search index to update derived data
+
+## Event sourcing - DB agnostic
+
+Producer -> broker -> consumer -> database (can be switched out in the future)
+
+## Message processing at least once
+
+2 phase commit or idempotence
+
+# Message queue vs event streaming vs stream processing
+Use SQS → If you need a simple, managed queue for message passing with at-least-once delivery.
+Use Kafka → If you need event replayability, high throughput, and multiple consumers reading the same data.
+Use Flink → If you need to process and analyze streams in real time, transforming and aggregating data as it flows.
+
+## Kafka Topic: orders-topic (with 3 partitions)
+
+-------------------------------------------------|
+Partition 0 | Order 1 | Order 4 | Order 7 |
+Partition 1 | Order 2 | Order 5 | Order 8 |
+Partition 2 | Order 3 | Order 6 | Order 9 |
+-------------------------------------------------|
+Consumer 1 -> Reads from Partition 0
+Consumer 2 -> Reads from Partition 1
+Consumer 3 -> Reads from Partition 2
+
+Relational vs non relational

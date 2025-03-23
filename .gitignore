@@ -7,3 +7,8 @@ todo
 frontend/src/components/Modal.js
 rishi-test.pem
 Learning/DevOps Roadmap/A4L.pem
+frontend/.DS_Store
+Learning/Terraform/terraform.tfstate
+Learning/Terraform/terraform.tfstate.backup
+Learning/Terraform/.terraform
+Learning/Terraform/.terraform.lock.hcl

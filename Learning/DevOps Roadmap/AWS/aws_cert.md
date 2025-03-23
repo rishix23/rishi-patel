@@ -64,6 +64,12 @@ Logs, Events, Metrics
 - CloudWatch Events - AWS Services and Schedules
 - Namespace (AWS/EC2) -> Metric (CPU Utilization) -> Datapoint
 - Metric -> Alarm -> is it OK?/Alarm! -> SNS Notif or action
+- No ready metrics for:
+  - Memory utilization
+  - Disk swap utilization
+  - Disk space utilization
+  - Page file utilization
+  - Log collection
 
 # Shared Responsibility Model
 
@@ -197,11 +203,17 @@ Managment Account/Master Account is the _main_ and then other accounts join from
 
 Org -> OU -> AWS Account
 
+## AWS Resource Access Manager (RAM)
+
+Service that enables you to easily and securely share AWS resources with any AWS account or within your AWS Organization.
+
+- Can share AWS Transit Gateways, Subnets, AWS License Manager configurations, and Amazon Route 53 Resolver rules resources with RAM.
+
 ## Service Control Polices
 
 Policies that can be attached to Organization, OUs, or Individual Accounts _inherits down the tree_
 
-_manamgement/master account is not affected by SCPs_
+_management/master account is not affected by SCPs_
 
 _They limit what the account can do including the account root user_
 
@@ -292,8 +304,8 @@ MFA is required to delete versions
 
 # Transfer Acceleration
 
-- must be versioned
-- uses edge location which has direct connections to other regions
+- Must be versioned
+- Uses edge location which has direct connections to other regions
 
 # KMS
 
@@ -579,8 +591,8 @@ Often the only way into the private VPC
 
 **Associated only with subnets and filter traffic across the subnet boundry**
 
-- Sstateless so both request and response parts need 1 inbound/outbound rule
-- Can explciity allow and **_deny_**
+- Stateless so both request and response parts need 1 inbound/outbound rule
+- **Can explciity allow and deny**
 - Rules match destination IP/range, port, and protocol and either allow/deny based on a match
 - _Rules are processed in order, and lowest rule number first_
 - Rule pairs request port and ehpermeral port resposnse on each NACL which occurs in a VPC, and to/from a VPC
@@ -600,7 +612,7 @@ If a security group self references it means anything that has this SG attached
 
 ## NAT and NAT Gateways
 
-Remaapping source or destination IPs
+Remapping source or destination IPs
 
 - AZ resiliant
 - IP masquerading - hidng CIDR blocks behind one IP
@@ -780,9 +792,9 @@ Regional
 
 ## Placement Groups
 
-- Cluster - pack instances close together - 10Gbps - _One AZ ONLY_
-- Spread - provides infratructure isolation _7 instances per AZ_
-- Partition - more than 7 instances in a AZ - _max 7 partitions per AZ_ - each partition has its own rack - no sharing between paritions - topology aware
+- Cluster - pack instances close together - 10Gbps - _One AZ ONLY_ **Performance**
+- Spread - provides infrastructure isolation _7 instances per AZ_ - each instance on its own rack - **Resiliance**
+- Partition - more than 7 instances in a AZ - _max 7 partitions per AZ_ - each partition has its own rack - no sharing between paritions - **Topology aware**
 
 ## Dedicated Hosts
 
@@ -945,6 +957,11 @@ BASE = availibility (Basically available, soft state, eventually consistent)
 
 - Policy attached to user/role maps to -> local db user
 - **Only used for authentication not authorization**
+- IAM database authentication works with MySQL and PostgreSQL, and With this authentication method, you don't need to use a password when you connect to a DB instance, instead, you use an authentication token
+
+## RDS Enhanced Monitoring
+
+Enhanced Monitoring provides real-time metrics, including CPU utilization, memory usage, disk I/O, and more
 
 ## RDS Custom
 
@@ -984,6 +1001,11 @@ Supports auto scaling
 - Only accessible from VPC
 - Uses SSL/TLS
 - Reduces failover time by over 60%
+
+## Custom Endpoints
+
+- Create custom hostnames for RDS and Aurora instances
+- Use cases - read replicas, load balancing, simplifying connections
 
 ## Database Migraton Service
 
@@ -1107,6 +1129,8 @@ Custom - using external tool to determine healthy/unhealthy
 
 - Lambda function can reuse execution context, but has to assume it cant.
 - Provisioned concurrecny - AWS keeps x amount of warm contexts
+
+- **When you create or update Lambda functions that use environment variables, AWS Lambda encrypts them using the AWS Key Management Service. When your Lambda function is invoked, those values are decrypted and made available to the Lambda code**
 
 ## CloudWatch Events and Event Bridge
 
@@ -1325,23 +1349,23 @@ HA by default
 - Allows IPv6 IPs to access public internet
 - Inbound denied
 
-## Gateway Endpoints
+## Interface Endpoints
 
 **HA across all AZs in a region by default**
 
-- Provide private access to S3 and DynamoDB
-- **Uses a prefix list and route table**
-- Not accessible outside VPC they are in
-
-## Gateway Interfaces
-
-- **Provide private access to S3 and DynamoDB using DNS**
-- **Added to specific subnets - an ENI - not HA**
+- Provide private IP address to gain access to multiple AWS services such as API Gateway, S3, or Dynamo DB
+- **Requires private DNS resolution**
 - **Uses DNS and a private IP address for the interface endpoint**
-- Network access controlled by security groups
-- TCP and IPv4 only
-- Use private link
-- Private traffic travels to interface endpoint -> public service
+- Not accessible outside VPC they are in
+- Uses private link
+- Supports TCP/UDP
+
+## Gateway Endpoints
+
+- **Provide private access only to S3 and DynamoDB**
+- **Uses a prefix list and route table**
+- Supports TCP and IPv4 only
+- Completley private, does not use NAT gateway, internet gateway or public internet
 
 ## VPC Peering
 
@@ -1399,7 +1423,7 @@ Supports migrations, extensions, storage tiering, DR, and replacement of backup 
 - **All stored locally**
 - **Great for full disk backup**
 - **Assists with DR, create EBS volumes in AWS**
-- **Local volumes on prem -> asyncrhonus copy to S3 -> EBS snapshots are created**
+- **Local volumes on prem -> asynchronus copy to S3 -> EBS snapshots are created**
 
 ### Volume Cached
 
@@ -1430,7 +1454,7 @@ Transfer data in/out of AWS
 
 - Simple AD Mode - an implementation of Samba 4 (compatibility with basics AD functions)
 - AWS Managed Microsoft AD - an actual Microsoft AD DS Implementation
-- AD Connector - proxies requests back to an on-premises directory (existing active directory on-premises and want a minimal AWS footprint to run isolated services which need a directory)
+- AD Connector - provides a secure, managed connection between your on-premises AD and AWS - proxies requests back to an on-premises directory (if existing active directory on-premises and want a minimal AWS footprint to run isolated services which needs a directory)
 
 ## DataSync Service
 
@@ -1475,7 +1499,20 @@ Managed file transfer service - supports transferring to or from S3 and EFS
 - **HTTPS terminated at firewall then new encrypted L7 connection from FW to backend**
 - **Data can be inspected, blocked, replaced, or tagged and it can identify, block, and adjust specific applications**
 
-## WAF - NEED REVIEW
+## WAF
+
+Helps protect your web applications or APIs against common web exploits and bots that may affect availability, compromise security, or consume excessive resources.
+
+Resource type - CloudFront or regional service
+Web ACL:
+
+- allow/deny lists
+- SQL Injection
+- XSS
+- HTTP Flood
+
+- Use logs generated by WAF/Applications to then update the WEBACL
+- Add rules/rule groups
 
 ## AWS Shield
 
@@ -1524,6 +1561,16 @@ Data Security and Data Privacy Service
 ## AWS Gaurdduty
 
 Guard Duty is an automatic threat detection service which reviews data from supported services and attempts to identify any events outside of the 'norm' for a given AWS account or Accounts
+
+## AWS Network Firewall
+
+A stateful and stateless firewall that helps secure your VPC traffic.
+
+- Supports: Deep packet inspection, intrusion detection & prevention (IDS/IPS), domain filtering
+
+## AWS Firewall Manager
+
+If you have multiple AWS accounts, AWS Firewall Manager is a security policy management service which ensures all accounts follow the same security policies for AWS Network Firewall, WAF, and Shield
 
 # CLOUDFORMATION
 
