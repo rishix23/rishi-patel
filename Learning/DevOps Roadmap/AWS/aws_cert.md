@@ -1548,7 +1548,7 @@ Data Security and Data Privacy Service
 
 ## AWS Inspector
 
-- **Scans EC2 isntances and the instance OS**
+- **Scans EC2 instances and the instance OS**
 - **Finds vulnerabilities and deviations**
 - Provides a report of findings ordered by priority
 - Network assesment (agentless)
@@ -1681,11 +1681,19 @@ Redshift is a column based, petabyte scale, data warehousing product within AWS
 
 - **Enhanced VPC routing**
 
-# AWS ARTIFACT
+# AWS Artifact
 
 AWS Artifact is your go-to, central resource for compliance-related information that matters to you
 
-- \*\*
+# AWS EMR
+
+Amazon EMR is a managed cluster platform that simplifies running big data frameworks, such as Apache Hadoop and Apache Spark, on AWS to process and analyze vast amounts of data.
+
+# AWS DLM
+
+You can use Amazon Data Lifecycle Manager (Amazon DLM) to automate the creation, retention, and deletion of snapshots taken to back up your Amazon EBS volumes.
+
+- ***
 
 prev, right
 ^
